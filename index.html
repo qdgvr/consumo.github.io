@@ -43,11 +43,32 @@
   <div class="card">
     <h1>Consumo alimentario: mayores subidas</h1>
     <canvas id="chartConsUp"></canvas>
-    <p class="note">Top 20 aumentos de gasto por hogar (real, nominal y precio). Fuente: gráfico de referencia del proyecto.</p>
+    <p class="note">Top 20 aumentos de gasto por hogar (real, nominal y precio). Fuente: Consumo alimentario en España en 2024: salud y facilidad. ASEDAS</p>
   </div>
 
   <script>
-    const labels = ['Eggs','Sugar','Coffee','Ready meals','Other cereal products','Pastas & couscous','Sauces & condiments','Ice cream','Other dairy products','Tea','Flour & other cereals','Cheese','Whole milk','Dried/smoked/salted fish & seafood','Rice','Skimmed milk','Poultry meat','Pig meat','Frozen fish','Salt, spices & culinary herbs'];
+    const labels = [
+      'Huevos',
+      'Azúcar',
+      'Café',
+      'Platos preparados',
+      'Otros productos de cereales',
+      'Pastas y cuscús',
+      'Salsas y condimentos',
+      'Helados',
+      'Otros lácteos',
+      'Té',
+      'Harina y otros cereales',
+      'Queso',
+      'Leche entera',
+      'Pescado/marisco seco, ahumado o salado',
+      'Arroz',
+      'Leche desnatada',
+      'Carne de ave',
+      'Carne de cerdo',
+      'Pescado congelado',
+      'Sal, especias y hierbas culinarias'
+    ];
     const real = [18.9,17.9,17.6,16.2,15.1,12.5,10.8,8.9,8.5,7.6,7.6,6.9,6.9,6.7,6.1,4.1,3.7,3.4,2.4,2.1];
     const nominal = [59.9,50.8,43.4,50.1,49.0,45.5,43.1,39.4,46.0,31.3,39.2,43.8,43.8,30.2,37.3,40.0,30.4,30.1,25.1,31.9];
     const precio = [46.1,67.3,19.5,22.1,15.5,41.0,47.4,26.4,33.1,29.2,47.6,33.9,50.3,27.4,41.1,48.9,26.6,29.2,23.1,27.1];
