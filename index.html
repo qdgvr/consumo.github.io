@@ -2,107 +2,133 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Consumo alimentario: mayores subidas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --panel: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --accent1: #d65f3b;
-      --accent2: #2f8fcc;
-      --accent3: #8b5cf6;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background: #f6f7fb;
-      color: var(--text);
-      padding: 24px 16px 48px;
-      display: flex;
-      justify-content: center;
-    }
-    .card {
-      width: 100%;
-      max-width: 1100px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-    }
-    h1 { margin: 0 0 8px; font-size: 22px; }
-    p.note { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
-    canvas { width: 100%; height: 520px; }
-  </style>
+  <title>Comunicación | Informe especial</title>
+  <meta name="description" content="Página editorial de Comunicación con formato de artículo de análisis.">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="card">
-    <h1>Consumo alimentario: mayores subidas</h1>
-    <canvas id="chartConsUp"></canvas>
-    <p class="note">Top 20 aumentos de gasto por hogar (real, nominal y precio). Fuente: Consumo alimentario en España en 2024: salud y facilidad. ASEDAS</p>
-  </div>
+  <a class="skip-link" href="#main">Saltar al contenido principal</a>
 
-  <script>
-    const labels = [
-      'Huevos',
-      'Azúcar',
-      'Café',
-      'Platos preparados',
-      'Otros productos de cereales',
-      'Pastas y cuscús',
-      'Salsas y condimentos',
-      'Helados',
-      'Otros lácteos',
-      'Té',
-      'Harina y otros cereales',
-      'Queso',
-      'Leche entera',
-      'Pescado/marisco seco, ahumado o salado',
-      'Arroz',
-      'Leche desnatada',
-      'Carne de ave',
-      'Carne de cerdo',
-      'Pescado congelado',
-      'Sal, especias y hierbas culinarias'
-    ];
-    const real = [18.9,17.9,17.6,16.2,15.1,12.5,10.8,8.9,8.5,7.6,7.6,6.9,6.9,6.7,6.1,4.1,3.7,3.4,2.4,2.1];
-    const nominal = [59.9,50.8,43.4,50.1,49.0,45.5,43.1,39.4,46.0,31.3,39.2,43.8,43.8,30.2,37.3,40.0,30.4,30.1,25.1,31.9];
-    const precio = [46.1,67.3,19.5,22.1,15.5,41.0,47.4,26.4,33.1,29.2,47.6,33.9,50.3,27.4,41.1,48.9,26.6,29.2,23.1,27.1];
+  <header class="site-header">
+    <div class="masthead" aria-label="Cabecera principal">
+      <div class="utility-row">
+        <button class="menu-button" aria-label="Abrir menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <a class="subscribe-link" href="#">Suscríbete</a>
+      </div>
+      <a class="brand" href="/" aria-label="Comunicación">Comunicación</a>
+      <p class="tagline">Democracia, datos y vida pública</p>
+    </div>
 
-    new Chart(document.getElementById('chartConsUp'), {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          { label: 'Real (%)', data: real, backgroundColor: '#2f8fcc' },
-          { label: 'Nominal (%)', data: nominal, backgroundColor: '#8b5cf6' },
-          { label: 'Precio (%)', data: precio, backgroundColor: '#d65f3b' }
-        ]
-      },
-      options: {
-        indexAxis: 'y',
-        responsive: true,
-        interaction: { mode: 'index', intersect: false },
-        scales: {
-          x: {
-            beginAtZero: true,
-            suggestedMin: -10,
-            suggestedMax: 80,
-            title: { display: true, text: 'Variación de gasto (%)' },
-            grid: { color: '#e5e7eb' }
-          },
-          y: {
-            grid: { display: false },
-            ticks: { autoSkip: false }
-          }
-        },
-        plugins: { legend: { position: 'bottom' } }
-      }
-    });
-  </script>
+    <nav class="section-nav" aria-label="Secciones">
+      <a href="#">Política</a>
+      <a href="#">Opinión</a>
+      <a href="#">Sociedad</a>
+      <a href="#">Economía</a>
+      <a href="#">Tecnología</a>
+      <a href="#">Mundo</a>
+      <a href="#">Cultura</a>
+      <a href="#">Datos</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <article class="article-shell">
+      <div class="section-kicker">Política · Encuesta · Análisis</div>
+
+      <header class="article-header">
+        <h1>El apoyo público se erosiona mientras crece la preocupación por el coste político de la guerra</h1>
+        <p class="dek">Una encuesta nacional muestra una opinión pública dividida, con diferencias persistentes por identificación partidista, edad y percepción económica.</p>
+        <div class="meta-grid">
+          <div class="byline">
+            <span>Por</span>
+            <a href="#">Redacción de Comunicación</a>
+          </div>
+          <div class="date-line">1 de mayo de 2026, 6:00 a. m.</div>
+          <div class="read-time">8 min de lectura</div>
+        </div>
+      </header>
+
+      <figure class="hero-figure">
+        <div class="hero-placeholder" role="img" aria-label="Imagen editorial provisional con una sala de prensa abstracta">
+          <div class="hero-badge">Imagen provisional</div>
+        </div>
+        <figcaption>Una sala de prensa durante una comparecencia oficial. La imagen definitiva puede sustituirse en este bloque. <span>(Comunicación)</span></figcaption>
+      </figure>
+
+      <div class="summary-box" aria-label="Resumen">
+        <h2>Resumen</h2>
+        <ul>
+          <li>La oposición al conflicto aumenta cuando los encuestados evalúan sus posibles efectos económicos.</li>
+          <li>Las diferencias partidistas siguen siendo amplias, aunque los independientes muestran mayor incertidumbre.</li>
+          <li>El coste político se concentra en la percepción de inflación, seguridad y liderazgo internacional.</li>
+        </ul>
+      </div>
+
+      <div class="article-layout">
+        <aside class="share-rail" aria-label="Acciones">
+          <a href="#" aria-label="Guardar artículo">Guardar</a>
+          <a href="#" aria-label="Compartir artículo">Compartir</a>
+          <a href="#" aria-label="Comentar artículo">Comentar</a>
+        </aside>
+
+        <section class="article-body">
+          <p>El rechazo público a la intervención militar ha crecido de forma sostenida durante las últimas semanas, según una encuesta nacional diseñada para medir no solo la aprobación general del conflicto, sino también las consecuencias económicas y políticas que los ciudadanos asocian a la decisión.</p>
+
+          <p>La lectura principal es que el apoyo no se distribuye de manera uniforme. Entre los votantes más cercanos al gobierno, la operación conserva un respaldo notable. Sin embargo, entre los independientes y los votantes menos identificados partidistamente, las dudas sobre el coste económico y la duración del conflicto pesan con más fuerza.</p>
+
+          <p>El resultado sitúa la discusión pública en un terreno complejo: la evaluación de la política exterior ya no depende únicamente de la seguridad nacional, sino también de los precios de la energía, la confianza en la economía y la percepción de estabilidad institucional.</p>
+
+          <blockquote>
+            <p>La pregunta central no es solo si la intervención fue correcta, sino cuánto tiempo puede sostenerse políticamente cuando los costes domésticos se vuelven visibles.</p>
+          </blockquote>
+
+          <p>Los datos sugieren además que la opinión pública reacciona con rapidez cuando el conflicto se conecta con el consumo cotidiano. Los hogares que declaran haber reducido viajes, gastos no esenciales o desplazamientos son también los que muestran mayor probabilidad de considerar la intervención como un error.</p>
+
+          <p>La Casa Blanca, por su parte, insiste en que la presión militar puede forzar una negociación favorable. Pero la encuesta refleja que una parte significativa del electorado duda de que la estrategia produzca un resultado claro en el corto plazo.</p>
+
+          <h2>Una división partidista persistente</h2>
+
+          <p>La identificación partidista sigue siendo el predictor más fuerte de las actitudes hacia el conflicto. Los republicanos continúan defendiendo mayoritariamente la decisión, mientras que los demócratas la rechazan de forma amplia. El grupo más relevante para observar el cambio político es el de los independientes.</p>
+
+          <p>En ese segmento, el apoyo inicial se ha debilitado a medida que la intervención se presenta menos como una acción puntual y más como una crisis prolongada. Esa diferencia ayuda a explicar por qué el debate ha pasado de la legitimidad del ataque inicial a la pregunta sobre su duración y sus objetivos finales.</p>
+
+          <h2>Economía y seguridad</h2>
+
+          <p>El vínculo entre política exterior y economía doméstica aparece con especial claridad en las respuestas sobre precios, inflación y riesgo de recesión. Para muchos encuestados, el conflicto no es un hecho lejano, sino una decisión que puede alterar el coste de vida.</p>
+
+          <p>También crece la percepción de riesgo en materia de seguridad. Una mayoría considera que la intervención puede aumentar la exposición a represalias, tensar las alianzas internacionales o prolongar la inestabilidad regional.</p>
+
+          <p>Este artículo usa texto provisional. Cuando proporciones la imagen y el contenido definitivo, la estructura puede mantenerse y sustituirse solo el bloque narrativo.</p>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <section>
+        <h2>Comunicación</h2>
+        <p>Periodismo de datos, análisis político y contexto público.</p>
+      </section>
+      <section>
+        <h3>Secciones</h3>
+        <a href="#">Política</a>
+        <a href="#">Sociedad</a>
+        <a href="#">Economía</a>
+        <a href="#">Datos</a>
+      </section>
+      <section>
+        <h3>Contacto</h3>
+        <a href="#">Redacción</a>
+        <a href="#">Correcciones</a>
+        <a href="#">Aviso legal</a>
+      </section>
+    </div>
+  </footer>
 </body>
 </html>
