@@ -16,22 +16,23 @@
     return +cleaned;
   };
 
+  const rateUnitNote = "Unidad: nacimientos por 1.000 mujeres; no es porcentaje.";
   const outcomes = [
-    { field: "GFR", title: "Fecundidad general", label: "Nacimientos por 1.000 mujeres de 15-44", suffix: " por 1.000", digits: 1 },
-    { field: "ASFR_15_19", title: "Fecundidad 15-19", label: "Nacimientos por 1.000 mujeres de 15-19", suffix: " por 1.000", digits: 1 },
-    { field: "ASFR_20_24", title: "Fecundidad 20-24", label: "Nacimientos por 1.000 mujeres de 20-24", suffix: " por 1.000", digits: 1 },
-    { field: "ASFR_25_29", title: "Fecundidad 25-29", label: "Nacimientos por 1.000 mujeres de 25-29", suffix: " por 1.000", digits: 1 },
-    { field: "ASFR_30_34", title: "Fecundidad 30-34", label: "Nacimientos por 1.000 mujeres de 30-34", suffix: " por 1.000", digits: 1 },
-    { field: "ASFR_35_39", title: "Fecundidad 35-39", label: "Nacimientos por 1.000 mujeres de 35-39", suffix: " por 1.000", digits: 1 },
-    { field: "ASFR_40_44", title: "Fecundidad 40-44", label: "Nacimientos por 1.000 mujeres de 40-44", suffix: " por 1.000", digits: 2 },
-    { field: "FirstBirthRate", title: "Primeros nacimientos", label: "Primeros nacimientos por 1.000 mujeres de 15-44", suffix: " por 1.000", digits: 1 },
-    { field: "MeanMaternalAge", title: "Edad media materna", label: "Edad media de la madre", suffix: " años", digits: 2 },
-    { field: "BirthShare_15_19", title: "Peso de nacimientos 15-19", label: "Porcentaje de nacimientos 15-19", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_20_24", title: "Peso de nacimientos 20-24", label: "Porcentaje de nacimientos 20-24", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_25_29", title: "Peso de nacimientos 25-29", label: "Porcentaje de nacimientos 25-29", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_30_34", title: "Peso de nacimientos 30-34", label: "Porcentaje de nacimientos 30-34", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_35_39", title: "Peso de nacimientos 35-39", label: "Porcentaje de nacimientos 35-39", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_40_44", title: "Peso de nacimientos 40-44", label: "Porcentaje de nacimientos 40-44", multiplier: 100, suffix: "%", digits: 2 }
+    { field: "GFR", title: "Fecundidad general", label: "Nacimientos por 1.000 mujeres de 15-44", suffix: " por 1.000", digits: 1, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "ASFR_15_19", title: "Fecundidad 15-19", label: "Nacimientos por 1.000 mujeres de 15-19", suffix: " por 1.000", digits: 1, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "ASFR_20_24", title: "Fecundidad 20-24", label: "Nacimientos por 1.000 mujeres de 20-24", suffix: " por 1.000", digits: 1, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "ASFR_25_29", title: "Fecundidad 25-29", label: "Nacimientos por 1.000 mujeres de 25-29", suffix: " por 1.000", digits: 1, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "ASFR_30_34", title: "Fecundidad 30-34", label: "Nacimientos por 1.000 mujeres de 30-34", suffix: " por 1.000", digits: 1, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "ASFR_35_39", title: "Fecundidad 35-39", label: "Nacimientos por 1.000 mujeres de 35-39", suffix: " por 1.000", digits: 1, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "ASFR_40_44", title: "Fecundidad 40-44", label: "Nacimientos por 1.000 mujeres de 40-44", suffix: " por 1.000", digits: 2, axisLabel: "Nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "FirstBirthRate", title: "Primeros nacimientos", label: "Primeros nacimientos por 1.000 mujeres de 15-44", suffix: " por 1.000", digits: 1, axisLabel: "Primeros nacimientos por 1.000 mujeres", unitNote: rateUnitNote },
+    { field: "MeanMaternalAge", title: "Edad media materna", label: "Edad media de la madre", suffix: " años", digits: 2, axisLabel: "Años", unitNote: "Unidad: años." },
+    { field: "BirthShare_15_19", title: "Peso de nacimientos 15-19", label: "Porcentaje de nacimientos 15-19", multiplier: 100, suffix: "%", digits: 1, axisLabel: "% del total de nacimientos", unitNote: "Unidad: porcentaje del total de nacimientos." },
+    { field: "BirthShare_20_24", title: "Peso de nacimientos 20-24", label: "Porcentaje de nacimientos 20-24", multiplier: 100, suffix: "%", digits: 1, axisLabel: "% del total de nacimientos", unitNote: "Unidad: porcentaje del total de nacimientos." },
+    { field: "BirthShare_25_29", title: "Peso de nacimientos 25-29", label: "Porcentaje de nacimientos 25-29", multiplier: 100, suffix: "%", digits: 1, axisLabel: "% del total de nacimientos", unitNote: "Unidad: porcentaje del total de nacimientos." },
+    { field: "BirthShare_30_34", title: "Peso de nacimientos 30-34", label: "Porcentaje de nacimientos 30-34", multiplier: 100, suffix: "%", digits: 1, axisLabel: "% del total de nacimientos", unitNote: "Unidad: porcentaje del total de nacimientos." },
+    { field: "BirthShare_35_39", title: "Peso de nacimientos 35-39", label: "Porcentaje de nacimientos 35-39", multiplier: 100, suffix: "%", digits: 1, axisLabel: "% del total de nacimientos", unitNote: "Unidad: porcentaje del total de nacimientos." },
+    { field: "BirthShare_40_44", title: "Peso de nacimientos 40-44", label: "Porcentaje de nacimientos 40-44", multiplier: 100, suffix: "%", digits: 2, axisLabel: "% del total de nacimientos", unitNote: "Unidad: porcentaje del total de nacimientos." }
   ];
 
   const fixedMetrics = {
@@ -288,7 +289,8 @@
       stateLabelEl.textContent = metric.label;
       modalTitleEl.textContent = `${metric.title} por estado`;
       trendTitleEl.textContent = `Tendencia de ${metric.title.toLowerCase()} (Estados Unidos)`;
-      trendCopyEl.textContent = metric.trendCopy || `Evolución media anual de ${metric.title.toLowerCase()} en todos los estados.`;
+      const trendCopy = metric.trendCopy || `Evolución media anual de ${metric.title.toLowerCase()} en todos los estados.`;
+      trendCopyEl.textContent = metric.unitNote ? `${trendCopy} ${metric.unitNote}` : trendCopy;
       renderLegend(id.legendRow, color, metric);
       refreshMapColors();
       updateRankLists();
@@ -453,6 +455,16 @@
       .call(yAxis)
       .call(axis => axis.selectAll("text").attr("font-size", 11).attr("fill", "#cfcfcf"))
       .call(axis => axis.selectAll("path,line").attr("stroke", "#3a3a3a"));
+
+    if (metric.axisLabel) {
+      svg.append("text")
+        .attr("x", margin.left)
+        .attr("y", 14)
+        .attr("fill", "#a8a8a8")
+        .attr("font-size", 12)
+        .attr("font-family", "Franklin, Arial, sans-serif")
+        .text(metric.axisLabel);
+    }
 
     const lineGen = d3.line().x(d => x(d.year)).y(d => y(d.value)).curve(d3.curveMonotoneX);
     g.append("path").datum(filtered).attr("fill", "none").attr("stroke", "#30c0c0").attr("stroke-width", 3).attr("d", lineGen);
