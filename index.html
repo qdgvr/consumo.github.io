@@ -6,7 +6,8 @@
   <title>Comunicación | Technology</title>
   <meta name="description" content="Dark technology article page for Comunicación.">
   <style>html,body{margin:0;background:#111;color:#f5f5f5}</style>
-  <link rel="stylesheet" href="wp-dark-article-v9.css">
+  <link rel="stylesheet" href="wp-dark-article-v10.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -77,7 +78,282 @@
           </div>
         </section>
       </section>
+
+      <section class="us-map-widget" id="us-map-widget" aria-label="Interactive United States state map">
+        <section class="map-stack">
+          <section class="metric-block" id="grpip-block">
+            <div class="layout">
+              <div class="map-block">
+                <div class="map-shell">
+                  <button id="search-toggle-grpip" class="map-search-btn" title="주 검색 열기/닫기">🔍</button>
+                  <div id="search-panel-grpip" class="map-search-panel">
+                    <input id="search-input-grpip" type="text" placeholder="Introduzca el nombre del estado o selecciónelo de la lista inferior.">
+                    <div id="search-list-grpip" class="search-list"></div>
+                  </div>
+
+                  <div class="year-select" id="year-select-grpip">
+                    <button class="year-select-btn" id="year-select-btn-grpip">2023 ▼</button>
+                    <div class="year-dropdown" id="year-dropdown-grpip"></div>
+                  </div>
+
+                  <div class="map-zoom">
+                    <button class="zoom-btn" id="zoom-in-grpip" aria-label="Zoom In">+</button>
+                    <button class="zoom-btn" id="zoom-out-grpip" aria-label="Zoom Out">−</button>
+                  </div>
+
+                  <div id="map-grpip" class="map-target"></div>
+                </div>
+
+                <div id="legend-container-grpip" class="legend-steps">
+                  <div class="legend-title" id="legend-title-grpip">Alquiler bruto como porcentaje de los ingresos del hogar en los últimos 12 meses.</div>
+                  <div class="legend-steps-row" id="legend-steps-row-grpip"></div>
+                  <div class="legend-caption">Datos del ACS public use microdata sample (PUMS). Washington, D.C. :U.S. Census Bureau.</div>
+                </div>
+              </div>
+
+              <aside class="state-card">
+                <div class="state-card-title" id="state-title-grpip">United States</div>
+                <div class="state-card-subtitle" id="state-subtitle-grpip">Cuando seleccione un estado en el mapa de la izquierda o lo busque, el valor aparecerá en este recuadro.</div>
+
+                <div class="state-card-grid">
+                  <div class="state-card-box">
+                    <div class="state-card-label">Alquiler bruto como porcentaje de los ingresos del hogar en los últimos 12 meses.</div>
+                    <div class="state-card-value" id="state-value-grpip">-</div>
+                  </div>
+                  <div class="state-card-box">
+                    <div class="state-card-label">Rank</div>
+                    <div class="state-card-rank" id="state-rank-grpip">-</div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <section class="ranking-section">
+              <div class="ranking-grid">
+                <div>
+                  <div class="ranking-column-title">Top States</div>
+                  <ul class="ranking-list" id="top-states-list-grpip"></ul>
+                </div>
+                <div>
+                  <div class="ranking-column-title">Bottom States</div>
+                  <ul class="ranking-list" id="bottom-states-list-grpip"></ul>
+                </div>
+              </div>
+              <button id="view-all-btn">Ver todos los estados</button>
+            </section>
+
+            <div id="all-states-modal">
+              <div class="modal-panel">
+                <div class="modal-header">
+                  <div class="modal-title">GRPIP_mean by State (All States)</div>
+                  <button class="modal-close" id="modal-close-btn" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>State</th>
+                        <th class="td-right">Rank</th>
+                        <th class="td-right">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody id="all-states-table-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <section class="trend-section">
+              <h2>GRPIP Trends (United States)</h2>
+              <p>Muestra la evolución media de Estados Unidos calculada a partir del promedio del GRPIP de todos los estados en cada año.</p>
+              <div id="trend-chart"></div>
+              <div class="trend-caption">Cada punto de la línea representa la media simple del GRPIP de todos los estados incluidos en ese año.</div>
+            </section>
+          </section>
+
+          <section class="metric-block" id="fmd-block">
+            <div class="layout">
+              <div class="map-block">
+                <div class="map-shell">
+                  <button id="search-toggle-fmd" class="map-search-btn" title="주 검색 열기/닫기">🔍</button>
+                  <div id="search-panel-fmd" class="map-search-panel">
+                    <input id="search-input-fmd" type="text" placeholder="Introduzca el nombre del estado o selecciónelo de la lista inferior.">
+                    <div id="search-list-fmd" class="search-list"></div>
+                  </div>
+
+                  <div class="year-select" id="year-select-fmd">
+                    <button class="year-select-btn" id="year-select-btn-fmd">2023 ▼</button>
+                    <div class="year-dropdown" id="year-dropdown-fmd"></div>
+                  </div>
+
+                  <div class="map-zoom">
+                    <button class="zoom-btn" id="zoom-in-fmd" aria-label="Zoom In">+</button>
+                    <button class="zoom-btn" id="zoom-out-fmd" aria-label="Zoom Out">−</button>
+                  </div>
+
+                  <div id="map-fmd" class="map-target"></div>
+                </div>
+
+                <div id="legend-container-fmd" class="legend-steps">
+                  <div class="legend-title" id="legend-title-fmd">Prevalence_FrequentMentalDistress</div>
+                  <div class="legend-steps-row" id="legend-steps-row-fmd"></div>
+                  <div class="legend-caption">Datos del U.S. Department of Health and Human Services, Centers for Disease Control and Prevention, Behavioral Risk Factor Surveillance System</div>
+                </div>
+              </div>
+
+              <aside class="state-card">
+                <div class="state-card-title" id="state-title-fmd">United States</div>
+                <div class="state-card-subtitle" id="state-subtitle-fmd">Cuando seleccione un estado en el mapa de la izquierda o lo busque, el valor aparecerá en este recuadro.</div>
+
+                <div class="state-card-grid">
+                  <div class="state-card-box">
+                    <div class="state-card-label">14+ días con mala salud mental</div>
+                    <div class="state-card-value" id="state-value-fmd">-</div>
+                  </div>
+                  <div class="state-card-box">
+                    <div class="state-card-label">Rank</div>
+                    <div class="state-card-rank" id="state-rank-fmd">-</div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <section class="ranking-section">
+              <div class="ranking-grid">
+                <div>
+                  <div class="ranking-column-title">Top States</div>
+                  <ul class="ranking-list" id="top-states-list-fmd"></ul>
+                </div>
+                <div>
+                  <div class="ranking-column-title">Bottom States</div>
+                  <ul class="ranking-list" id="bottom-states-list-fmd"></ul>
+                </div>
+              </div>
+              <button id="view-all-btn-fmd">Ver todos los estados</button>
+            </section>
+
+            <div id="all-states-modal-fmd">
+              <div class="modal-panel">
+                <div class="modal-header">
+                  <div class="modal-title">Prevalence_FrequentMentalDistress by State (All States)</div>
+                  <button class="modal-close" id="modal-close-btn-fmd" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>State</th>
+                        <th class="td-right">Rank</th>
+                        <th class="td-right">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody id="all-states-table-body-fmd"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <section class="trend-section">
+              <h2>FrequentMentalDistress Trends (United States)</h2>
+              <p>Muestra la evolución media de Estados Unidos calculada a partir del promedio del malestar mental frecuente de todos los estados en cada año.</p>
+              <div id="trend-chart-fmd"></div>
+              <div class="trend-caption">Cada punto de la línea representa la media simple del malestar mental frecuente de todos los estados incluidos en ese año.</div>
+            </section>
+          </section>
+
+          <section class="metric-block" id="poorhlth-block">
+            <div class="layout">
+              <div class="map-block">
+                <div class="map-shell">
+                  <button id="search-toggle-poorhlth" class="map-search-btn" title="주 검색 열기/닫기">🔍</button>
+                  <div id="search-panel-poorhlth" class="map-search-panel">
+                    <input id="search-input-poorhlth" type="text" placeholder="Introduzca el nombre del estado o selecciónelo de la lista inferior.">
+                    <div id="search-list-poorhlth" class="search-list"></div>
+                  </div>
+
+                  <div class="year-select" id="year-select-poorhlth">
+                    <button class="year-select-btn" id="year-select-btn-poorhlth">2023 ▼</button>
+                    <div class="year-dropdown" id="year-dropdown-poorhlth"></div>
+                  </div>
+
+                  <div class="map-zoom">
+                    <button class="zoom-btn" id="zoom-in-poorhlth" aria-label="Zoom In">+</button>
+                    <button class="zoom-btn" id="zoom-out-poorhlth" aria-label="Zoom Out">−</button>
+                  </div>
+
+                  <div id="map-poorhlth" class="map-target"></div>
+                </div>
+
+                <div id="legend-container-poorhlth" class="legend-steps">
+                  <div class="legend-title" id="legend-title-poorhlth">Promedio_POORHLTH</div>
+                  <div class="legend-steps-row" id="legend-steps-row-poorhlth"></div>
+                  <div class="legend-caption">Datos del U.S. Department of Health and Human Services, Centers for Disease Control and Prevention, Behavioral Risk Factor Surveillance System</div>
+                </div>
+              </div>
+
+              <aside class="state-card">
+                <div class="state-card-title" id="state-title-poorhlth">United States</div>
+                <div class="state-card-subtitle" id="state-subtitle-poorhlth">Cuando seleccione un estado en el mapa de la izquierda o lo busque, el valor aparecerá en este recuadro.</div>
+
+                <div class="state-card-grid">
+                  <div class="state-card-box">
+                    <div class="state-card-label">Durante los últimos 30 días, ¿durante cuántos días la mala salud física o mental le impidió realizar sus actividades habituales, como cuidarse, trabajar o dedicarse a actividades de ocio?</div>
+                    <div class="state-card-value" id="state-value-poorhlth">-</div>
+                  </div>
+                  <div class="state-card-box">
+                    <div class="state-card-label">Rank</div>
+                    <div class="state-card-rank" id="state-rank-poorhlth">-</div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <section class="ranking-section">
+              <div class="ranking-grid">
+                <div>
+                  <div class="ranking-column-title">Top States</div>
+                  <ul class="ranking-list" id="top-states-list-poorhlth"></ul>
+                </div>
+                <div>
+                  <div class="ranking-column-title">Bottom States</div>
+                  <ul class="ranking-list" id="bottom-states-list-poorhlth"></ul>
+                </div>
+              </div>
+              <button id="view-all-btn-poorhlth">Ver todos los estados</button>
+            </section>
+
+            <div id="all-states-modal-poorhlth">
+              <div class="modal-panel">
+                <div class="modal-header">
+                  <div class="modal-title">Promedio_POORHLTH by State (All States)</div>
+                  <button class="modal-close" id="modal-close-btn-poorhlth" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>State</th>
+                        <th class="td-right">Rank</th>
+                        <th class="td-right">Value</th>
+                      </tr>
+                    </thead>
+                    <tbody id="all-states-table-body-poorhlth"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <section class="trend-section">
+              <h2>Promedio_POORHLTH Trends (United States)</h2>
+              <p>Muestra la evolución media de Estados Unidos calculada a partir del promedio del POORHLTH de todos los estados en cada año.</p>
+              <div id="trend-chart-poorhlth"></div>
+              <div class="trend-caption">Cada punto de la línea representa la media simple del POORHLTH de todos los estados incluidos en ese año.</div>
+            </section>
+          </section>
+        </section>
+      </section>
     </article>
   </main>
+  <script src="us-map-widget.js"></script>
 </body>
 </html>
