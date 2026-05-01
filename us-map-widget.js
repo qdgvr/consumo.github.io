@@ -45,7 +45,7 @@
     }],
     m: [{
       field: "M_minutes",
-      title: "Tiempo exterior mediador",
+      title: "Minutos exteriores mediadores",
       label: "Minutos diarios",
       trendCopy: "Evolución media anual de los minutos diarios dedicados a actividades exteriores de trabajo, educación, comida, deporte y socialización básica.",
       suffix: " min",
