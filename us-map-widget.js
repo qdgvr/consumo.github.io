@@ -17,14 +17,14 @@
   };
 
   const outcomes = [
-    { field: "GFR", title: "Fecundidad general", label: "Tasa general de fecundidad", suffix: "", digits: 1 },
-    { field: "ASFR_15_19", title: "Fecundidad 15-19", label: "Tasa de fecundidad por edad 15-19", suffix: "", digits: 1 },
-    { field: "ASFR_20_24", title: "Fecundidad 20-24", label: "Tasa de fecundidad por edad 20-24", suffix: "", digits: 1 },
-    { field: "ASFR_25_29", title: "Fecundidad 25-29", label: "Tasa de fecundidad por edad 25-29", suffix: "", digits: 1 },
-    { field: "ASFR_30_34", title: "Fecundidad 30-34", label: "Tasa de fecundidad por edad 30-34", suffix: "", digits: 1 },
-    { field: "ASFR_35_39", title: "Fecundidad 35-39", label: "Tasa de fecundidad por edad 35-39", suffix: "", digits: 1 },
-    { field: "ASFR_40_44", title: "Fecundidad 40-44", label: "Tasa de fecundidad por edad 40-44", suffix: "", digits: 2 },
-    { field: "FirstBirthRate", title: "Primeros nacimientos", label: "Tasa de primeros nacimientos", suffix: "", digits: 1 },
+    { field: "GFR", title: "Fecundidad general", label: "Nacimientos por 1.000 mujeres de 15-44", suffix: " por 1.000", digits: 1 },
+    { field: "ASFR_15_19", title: "Fecundidad 15-19", label: "Nacimientos por 1.000 mujeres de 15-19", suffix: " por 1.000", digits: 1 },
+    { field: "ASFR_20_24", title: "Fecundidad 20-24", label: "Nacimientos por 1.000 mujeres de 20-24", suffix: " por 1.000", digits: 1 },
+    { field: "ASFR_25_29", title: "Fecundidad 25-29", label: "Nacimientos por 1.000 mujeres de 25-29", suffix: " por 1.000", digits: 1 },
+    { field: "ASFR_30_34", title: "Fecundidad 30-34", label: "Nacimientos por 1.000 mujeres de 30-34", suffix: " por 1.000", digits: 1 },
+    { field: "ASFR_35_39", title: "Fecundidad 35-39", label: "Nacimientos por 1.000 mujeres de 35-39", suffix: " por 1.000", digits: 1 },
+    { field: "ASFR_40_44", title: "Fecundidad 40-44", label: "Nacimientos por 1.000 mujeres de 40-44", suffix: " por 1.000", digits: 2 },
+    { field: "FirstBirthRate", title: "Primeros nacimientos", label: "Primeros nacimientos por 1.000 mujeres de 15-44", suffix: " por 1.000", digits: 1 },
     { field: "MeanMaternalAge", title: "Edad media materna", label: "Edad media de la madre", suffix: " años", digits: 2 },
     { field: "BirthShare_15_19", title: "Peso de nacimientos 15-19", label: "Porcentaje de nacimientos 15-19", multiplier: 100, suffix: "%", digits: 1 },
     { field: "BirthShare_20_24", title: "Peso de nacimientos 20-24", label: "Porcentaje de nacimientos 20-24", multiplier: 100, suffix: "%", digits: 1 },
@@ -45,11 +45,12 @@
     }],
     m: [{
       field: "M_minutes",
-      title: "Minutos exteriores mediadores",
-      label: "Minutos diarios",
-      trendCopy: "Evolución media anual de los minutos diarios dedicados a actividades exteriores de trabajo, educación, comida, deporte y socialización básica.",
-      suffix: " min",
-      digits: 1
+      title: "Horas exteriores diarias",
+      label: "Horas diarias",
+      trendCopy: "Evolución media anual de las horas diarias dedicadas a actividades exteriores de trabajo, educación, comida, deporte y socialización básica.",
+      multiplier: 1 / 60,
+      suffix: " h",
+      digits: 2
     }],
     y: outcomes
   };
