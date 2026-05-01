@@ -295,6 +295,12 @@ a { color: inherit; }
   overflow: hidden;
   background: #496b88;
 }
+.lead-photo.lead-image {
+  display: block;
+  height: auto;
+  border: 1px solid #2a2a2a;
+  background: #111;
+}
 .lead-photo.data-hero {
   background:
     radial-gradient(circle at 78% 20%, rgba(111, 211, 255, 0.22), transparent 28%),
