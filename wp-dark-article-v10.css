@@ -663,6 +663,43 @@ a { color: inherit; }
   color: var(--text);
 }
 
+.us-map-widget .reportage-interlude,
+.us-map-widget .reportage-closing {
+  width: min(640px, 100%);
+  margin: 18px auto 0;
+  color: #fff;
+}
+
+.us-map-widget .reportage-interlude {
+  padding: 4px 0 0;
+}
+
+.us-map-widget .reportage-closing {
+  margin-top: 2px;
+  padding-top: 26px;
+  border-top: 1px solid #333;
+}
+
+.us-map-widget .reportage-interlude .metric-kicker {
+  margin-bottom: 10px;
+}
+
+.us-map-widget .reportage-interlude h2,
+.us-map-widget .reportage-closing h2 {
+  margin: 0 0 14px;
+  color: #fff;
+  font: 700 25px/1.12 var(--ui-font);
+  letter-spacing: -0.025em;
+}
+
+.us-map-widget .reportage-interlude p,
+.us-map-widget .reportage-closing p {
+  margin: 0;
+  padding: 0 0 20px;
+  color: #f2f2f2;
+  font: 400 18px/1.55 var(--body-font);
+}
+
 .us-map-widget .layout {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(260px, 1.3fr);
