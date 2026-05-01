@@ -74,8 +74,8 @@
     initMetric({ key: "y", metrics: fixedMetrics.y, data: validData, features: us.features, metricSelect: "metric-select-y" });
   }).catch(err => {
     const target = root.querySelector(".map-shell");
-    if (target) target.insertAdjacentHTML("beforeend", `<p class="map-error">Map data could not be loaded.</p>`);
-    console.error("Map data loading error:", err);
+    if (target) target.insertAdjacentHTML("beforeend", `<p class="map-error">No se pudieron cargar los datos del mapa.</p>`);
+    console.error("Error al cargar los datos del mapa:", err);
   });
 
   function ids(key) {
@@ -193,7 +193,7 @@
         tooltip.style("opacity", 1).html(
           v == null || Number.isNaN(v)
             ? `<strong>${stateName}</strong><br>Sin datos del año`
-            : `<strong>${stateName}</strong><br>Año ${selectedYear} ${metric.title}: ${formatValue(v, metric)}<br>Rank: ${rank} / ${totalStates}`
+            : `<strong>${stateName}</strong><br>Año ${selectedYear} ${metric.title}: ${formatValue(v, metric)}<br>Posición: ${rank} / ${totalStates}`
         );
       })
       .on("mousemove", event => tooltip.style("left", (event.pageX + 12) + "px").style("top", (event.pageY - 32) + "px"))
@@ -337,7 +337,7 @@
     }
 
     function resetStateCard() {
-      stateTitleEl.textContent = "United States";
+      stateTitleEl.textContent = "Estados Unidos";
       stateSubtitleEl.textContent = "Cuando seleccione un estado en el mapa de la izquierda o lo busque, el valor aparecerá en este recuadro.";
       stateValueEl.textContent = "-";
       stateRankEl.textContent = "-";
@@ -387,16 +387,16 @@
     });
     steps.push([prev, domain[1]]);
     const row = d3.select("#" + rowId);
-    const stepSel = row.selectAll(".legend-step").data(steps.concat([["No Data", "No Data"]]));
+    const stepSel = row.selectAll(".legend-step").data(steps.concat([["Sin datos", "Sin datos"]]));
     const enter = stepSel.enter().append("div").attr("class", "legend-step");
     enter.append("div").attr("class", "legend-chip");
     enter.append("div").attr("class", "legend-label");
     enter.merge(stepSel).each(function(d) {
       const chip = d3.select(this).select(".legend-chip");
       const label = d3.select(this).select(".legend-label");
-      if (d[0] === "No Data") {
+      if (d[0] === "Sin datos") {
         chip.style("background", noDataColor);
-        label.text("No Data");
+        label.text("Sin datos");
       } else {
         chip.style("background", colorScale((d[0] + d[1]) / 2));
         label.text(`${formatValue(d[0], metric)} - ${formatValue(d[1], metric)}`);
