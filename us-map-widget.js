@@ -44,13 +44,12 @@
       digits: 2
     }],
     m: [{
-      field: "M_share",
+      field: "M_minutes",
       title: "Tiempo exterior mediador",
-      label: "Porcentaje del día",
-      trendCopy: "Evolución media anual del tiempo exterior en actividades de trabajo, educación, comida, deporte y socialización básica.",
-      multiplier: 100,
-      suffix: "%",
-      digits: 2
+      label: "Minutos diarios",
+      trendCopy: "Evolución media anual de los minutos diarios dedicados a actividades exteriores de trabajo, educación, comida, deporte y socialización básica.",
+      suffix: " min",
+      digits: 1
     }],
     y: outcomes
   };
