@@ -17,26 +17,41 @@
   };
 
   const outcomes = [
-    { field: "GFR", title: "GFR", label: "General fertility rate", suffix: "", digits: 1 },
-    { field: "ASFR_15_19", title: "ASFR 15-19", label: "Age-specific fertility rate 15-19", suffix: "", digits: 1 },
-    { field: "ASFR_20_24", title: "ASFR 20-24", label: "Age-specific fertility rate 20-24", suffix: "", digits: 1 },
-    { field: "ASFR_25_29", title: "ASFR 25-29", label: "Age-specific fertility rate 25-29", suffix: "", digits: 1 },
-    { field: "ASFR_30_34", title: "ASFR 30-34", label: "Age-specific fertility rate 30-34", suffix: "", digits: 1 },
-    { field: "ASFR_35_39", title: "ASFR 35-39", label: "Age-specific fertility rate 35-39", suffix: "", digits: 1 },
-    { field: "ASFR_40_44", title: "ASFR 40-44", label: "Age-specific fertility rate 40-44", suffix: "", digits: 2 },
-    { field: "FirstBirthRate", title: "FirstBirthRate", label: "First birth rate", suffix: "", digits: 1 },
-    { field: "MeanMaternalAge", title: "MeanMaternalAge", label: "Mean maternal age", suffix: " años", digits: 2 },
-    { field: "BirthShare_15_19", title: "BirthShare 15-19", label: "Birth share 15-19", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_20_24", title: "BirthShare 20-24", label: "Birth share 20-24", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_25_29", title: "BirthShare 25-29", label: "Birth share 25-29", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_30_34", title: "BirthShare 30-34", label: "Birth share 30-34", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_35_39", title: "BirthShare 35-39", label: "Birth share 35-39", multiplier: 100, suffix: "%", digits: 1 },
-    { field: "BirthShare_40_44", title: "BirthShare 40-44", label: "Birth share 40-44", multiplier: 100, suffix: "%", digits: 2 }
+    { field: "GFR", title: "Fecundidad general", label: "Tasa general de fecundidad", suffix: "", digits: 1 },
+    { field: "ASFR_15_19", title: "Fecundidad 15-19", label: "Tasa de fecundidad por edad 15-19", suffix: "", digits: 1 },
+    { field: "ASFR_20_24", title: "Fecundidad 20-24", label: "Tasa de fecundidad por edad 20-24", suffix: "", digits: 1 },
+    { field: "ASFR_25_29", title: "Fecundidad 25-29", label: "Tasa de fecundidad por edad 25-29", suffix: "", digits: 1 },
+    { field: "ASFR_30_34", title: "Fecundidad 30-34", label: "Tasa de fecundidad por edad 30-34", suffix: "", digits: 1 },
+    { field: "ASFR_35_39", title: "Fecundidad 35-39", label: "Tasa de fecundidad por edad 35-39", suffix: "", digits: 1 },
+    { field: "ASFR_40_44", title: "Fecundidad 40-44", label: "Tasa de fecundidad por edad 40-44", suffix: "", digits: 2 },
+    { field: "FirstBirthRate", title: "Primeros nacimientos", label: "Tasa de primeros nacimientos", suffix: "", digits: 1 },
+    { field: "MeanMaternalAge", title: "Edad media materna", label: "Edad media de la madre", suffix: " años", digits: 2 },
+    { field: "BirthShare_15_19", title: "Peso de nacimientos 15-19", label: "Porcentaje de nacimientos 15-19", multiplier: 100, suffix: "%", digits: 1 },
+    { field: "BirthShare_20_24", title: "Peso de nacimientos 20-24", label: "Porcentaje de nacimientos 20-24", multiplier: 100, suffix: "%", digits: 1 },
+    { field: "BirthShare_25_29", title: "Peso de nacimientos 25-29", label: "Porcentaje de nacimientos 25-29", multiplier: 100, suffix: "%", digits: 1 },
+    { field: "BirthShare_30_34", title: "Peso de nacimientos 30-34", label: "Porcentaje de nacimientos 30-34", multiplier: 100, suffix: "%", digits: 1 },
+    { field: "BirthShare_35_39", title: "Peso de nacimientos 35-39", label: "Porcentaje de nacimientos 35-39", multiplier: 100, suffix: "%", digits: 1 },
+    { field: "BirthShare_40_44", title: "Peso de nacimientos 40-44", label: "Porcentaje de nacimientos 40-44", multiplier: 100, suffix: "%", digits: 2 }
   ];
 
   const fixedMetrics = {
-    x: [{ field: "DigitalOcio_hours", title: "DigitalOcio_hours", label: "Ocio digital diario", suffix: " h", digits: 2 }],
-    m: [{ field: "M_share", title: "M_share", label: "Mediador M (% del día)", multiplier: 100, suffix: "%", digits: 2 }],
+    x: [{
+      field: "DigitalOcio_hours",
+      title: "Ocio digital diario",
+      label: "Horas diarias de ocio digital",
+      trendCopy: "Evolución media anual de las horas diarias de televisión, videojuegos y ordenador recreativo en todos los estados.",
+      suffix: " h",
+      digits: 2
+    }],
+    m: [{
+      field: "M_share",
+      title: "Tiempo exterior mediador",
+      label: "Porcentaje del día",
+      trendCopy: "Evolución media anual del tiempo exterior en actividades de trabajo, educación, comida, deporte y socialización básica.",
+      multiplier: 100,
+      suffix: "%",
+      digits: 2
+    }],
     y: outcomes
   };
 
@@ -271,9 +286,9 @@
       prepareYearData(year);
       legendTitleEl.textContent = `Año ${year} · ${metric.title}`;
       stateLabelEl.textContent = metric.label;
-      modalTitleEl.textContent = `${metric.title} by State`;
-      trendTitleEl.textContent = `${metric.title} Trends (United States)`;
-      trendCopyEl.textContent = `Evolución media anual de ${metric.title} en todos los estados.`;
+      modalTitleEl.textContent = `${metric.title} por estado`;
+      trendTitleEl.textContent = `Tendencia de ${metric.title.toLowerCase()} (Estados Unidos)`;
+      trendCopyEl.textContent = metric.trendCopy || `Evolución media anual de ${metric.title.toLowerCase()} en todos los estados.`;
       renderLegend(id.legendRow, color, metric);
       refreshMapColors();
       updateRankLists();
@@ -413,7 +428,7 @@
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-    const filtered = trendData.filter(d => d.year !== 2020 && Number.isFinite(d.value));
+    const filtered = trendData.filter(d => Number.isFinite(d.value));
     const years = filtered.map(d => d.year);
     const x = d3.scalePoint().domain(years).range([0, innerWidth]).padding(0.5);
     const minVal = d3.min(filtered, d => d.value);

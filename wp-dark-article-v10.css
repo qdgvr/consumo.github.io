@@ -1031,6 +1031,7 @@ a { color: inherit; }
 }
 
 .us-map-widget .metric-control {
+  position: relative;
   width: min(360px, 100%);
   margin-top: 12px;
   display: flex;
@@ -1043,16 +1044,30 @@ a { color: inherit; }
 }
 
 .us-map-widget .metric-select {
+  appearance: none;
+  -webkit-appearance: none;
   width: 100%;
   min-height: 38px;
-  padding: 8px 10px;
-  border: 1px solid #343434;
-  border-radius: 8px;
-  background: #171717;
+  padding: 8px 28px 8px 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 2px;
+  background: #101010;
+  box-shadow: none;
   color: #fff;
   font: 500 14px/1.2 var(--ui-font);
   text-transform: none;
   letter-spacing: 0;
+  color-scheme: dark;
+}
+
+.us-map-widget .metric-control::after {
+  content: "▾";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: #d7d7d7;
+  font: 400 12px/1 var(--ui-font);
+  pointer-events: none;
 }
 
 .us-map-widget .view-all-btn {
