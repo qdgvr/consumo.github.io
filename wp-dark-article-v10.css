@@ -2026,3 +2026,389 @@ a { color: inherit; }
 .globe-statline {
   display: none !important;
 }
+
+/* Immersive US map interface: keep controls, remove card frames */
+.us-map-widget {
+  --map-bg: #080a0d;
+  --panel: rgba(10, 12, 16, .64);
+  --panel-dark: rgba(9, 11, 14, .54);
+  --border: rgba(255,255,255,.12);
+  --muted-map: rgba(245,245,245,.66);
+  --accent: #30c0c0;
+  --shadow: 0 22px 70px rgba(0,0,0,.48);
+  width: 100vw;
+  max-width: none;
+  margin: 0 calc(50% - 50vw);
+  padding: 0;
+  background: #080a0d;
+}
+
+.us-map-widget .map-stack {
+  gap: 0;
+}
+
+.us-map-widget .metric-block {
+  position: relative;
+  min-height: 112svh;
+  margin: 0;
+  padding: clamp(28px, 4.2vw, 64px);
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 72% 38%, rgba(48,192,192,.16), transparent 34%),
+    radial-gradient(circle at 25% 86%, rgba(47,109,246,.13), transparent 32%),
+    linear-gradient(180deg, #090b0e 0%, #0d0f12 55%, #090a0c 100%);
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.us-map-widget .metric-block + .metric-block {
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.us-map-widget .metric-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(8,10,13,.92) 0%, rgba(8,10,13,.58) 30%, rgba(8,10,13,.12) 58%, rgba(8,10,13,.72) 100%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 80px);
+}
+
+.us-map-widget .metric-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 0 46%, rgba(0,0,0,.28) 76%, rgba(0,0,0,.64) 100%);
+}
+
+.us-map-widget .metric-heading {
+  position: relative;
+  z-index: 8;
+  width: min(520px, 42vw);
+  margin: clamp(28px, 6vh, 72px) 0 20px;
+  padding: 0;
+  border: 0;
+  text-shadow: 0 18px 54px rgba(0,0,0,.68);
+}
+
+.us-map-widget .metric-kicker {
+  margin-bottom: 10px;
+  color: rgba(48,192,192,.78);
+  font-size: 13px;
+  letter-spacing: .16em;
+}
+
+.us-map-widget .metric-heading h2 {
+  color: #fff;
+  font: 700 clamp(38px, 5.2vw, 72px)/.96 var(--headline-font);
+  letter-spacing: -.045em;
+}
+
+.us-map-widget .metric-heading p:not(.metric-kicker) {
+  max-width: 520px;
+  color: rgba(245,245,245,.72);
+  font: 400 clamp(15px, 1.35vw, 19px)/1.35 var(--ui-font);
+}
+
+.us-map-widget .metric-control {
+  width: min(360px, 100%);
+  pointer-events: auto;
+}
+
+.us-map-widget .layout {
+  position: static;
+  display: block;
+}
+
+.us-map-widget .map-block {
+  display: block;
+}
+
+.us-map-widget .map-shell {
+  position: absolute;
+  inset: clamp(96px, 13vh, 150px) clamp(28px, 4vw, 72px) clamp(260px, 28vh, 340px) clamp(340px, 31vw, 560px);
+  z-index: 2;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.us-map-widget .map-target {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 34px 66px rgba(0,0,0,.42));
+}
+
+.us-map-widget .map-target svg {
+  width: 100%;
+  height: 100%;
+}
+
+.us-map-widget .state {
+  stroke: rgba(255,255,255,.55);
+  stroke-width: .85;
+  vector-effect: non-scaling-stroke;
+}
+
+.us-map-widget .map-search-btn,
+.us-map-widget .year-select-btn,
+.us-map-widget .zoom-btn,
+.us-map-widget .metric-select,
+.us-map-widget .view-all-btn {
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(14,16,20,.58);
+  box-shadow: 0 12px 38px rgba(0,0,0,.36);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.us-map-widget .map-search-btn {
+  top: 0;
+  left: 0;
+  color: #fff;
+}
+
+.us-map-widget .year-select {
+  top: 0;
+  left: 56px;
+}
+
+.us-map-widget .map-zoom {
+  top: 0;
+  right: 0;
+}
+
+.us-map-widget .map-search-panel,
+.us-map-widget .year-dropdown {
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(13,15,18,.84);
+  box-shadow: 0 18px 58px rgba(0,0,0,.48);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.us-map-widget .legend-steps {
+  position: absolute;
+  left: clamp(28px, 4.2vw, 64px);
+  bottom: clamp(136px, 16vh, 190px);
+  z-index: 7;
+  width: min(520px, 42vw);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.us-map-widget .legend-title {
+  color: rgba(245,245,245,.86);
+}
+
+.us-map-widget .legend-steps-row {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.us-map-widget .legend-step {
+  align-items: flex-start;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(245,245,245,.64);
+}
+
+.us-map-widget .legend-chip {
+  height: 9px;
+  border: 0;
+  border-radius: 0;
+}
+
+.us-map-widget .state-card {
+  position: absolute;
+  top: clamp(96px, 12vh, 150px);
+  right: clamp(28px, 4vw, 72px);
+  z-index: 8;
+  width: min(360px, 28vw);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #fff;
+  text-shadow: 0 16px 46px rgba(0,0,0,.72);
+}
+
+.us-map-widget .state-card-title {
+  font: 700 24px/1.1 var(--ui-font);
+}
+
+.us-map-widget .state-card-subtitle {
+  color: rgba(245,245,245,.62);
+}
+
+.us-map-widget .state-card-box {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.us-map-widget .state-card-label {
+  color: rgba(48,192,192,.72);
+}
+
+.us-map-widget .state-card-value {
+  color: #fff;
+  font-size: 28px;
+}
+
+.us-map-widget .ranking-section {
+  position: absolute;
+  right: clamp(28px, 4vw, 72px);
+  bottom: clamp(88px, 12vh, 150px);
+  z-index: 8;
+  width: min(420px, 32vw);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-shadow: 0 14px 42px rgba(0,0,0,.72);
+}
+
+.us-map-widget .ranking-column-title {
+  color: rgba(245,245,245,.86);
+}
+
+.us-map-widget .ranking-list li {
+  color: rgba(245,245,245,.82);
+}
+
+.us-map-widget .ranking-list button,
+.us-map-widget .modal-state-button {
+  color: #fff;
+}
+
+.us-map-widget .view-all-btn {
+  color: #fff;
+}
+
+.us-map-widget .trend-section {
+  position: absolute;
+  left: clamp(28px, 4.2vw, 64px);
+  right: clamp(28px, 4vw, 72px);
+  bottom: clamp(22px, 4vh, 48px);
+  z-index: 7;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+.us-map-widget .trend-section h2,
+.us-map-widget .trend-section p {
+  display: none;
+}
+
+.us-map-widget .trend-section svg {
+  max-height: 210px;
+}
+
+.us-map-widget .trend-caption {
+  color: rgba(245,245,245,.48);
+}
+
+.us-map-widget .modal-panel {
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(10,12,16,.92);
+  box-shadow: 0 26px 90px rgba(0,0,0,.66);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@media (max-width: 1100px) {
+  .us-map-widget .metric-block {
+    min-height: 128svh;
+  }
+
+  .us-map-widget .metric-heading,
+  .us-map-widget .legend-steps,
+  .us-map-widget .ranking-section,
+  .us-map-widget .state-card {
+    width: auto;
+  }
+
+  .us-map-widget .map-shell {
+    inset: 300px 22px 420px 22px;
+  }
+
+  .us-map-widget .state-card {
+    top: 170px;
+    left: 22px;
+    right: 22px;
+  }
+
+  .us-map-widget .legend-steps {
+    left: 22px;
+    right: 22px;
+    bottom: 300px;
+  }
+
+  .us-map-widget .ranking-section {
+    left: 22px;
+    right: 22px;
+    bottom: 118px;
+  }
+}
+
+@media (max-width: 620px) {
+  .us-map-widget {
+    width: 100vw;
+    margin: 0 calc(50% - 50vw);
+  }
+
+  .us-map-widget .metric-block {
+    min-height: 142svh;
+    padding: 22px;
+  }
+
+  .us-map-widget .metric-heading {
+    margin-top: 36px;
+  }
+
+  .us-map-widget .metric-heading h2 {
+    font-size: 34px;
+  }
+
+  .us-map-widget .map-shell {
+    inset: 330px 14px 470px 14px;
+  }
+
+  .us-map-widget .legend-steps-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .us-map-widget .ranking-grid,
+  .us-map-widget .state-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .us-map-widget .ranking-section {
+    bottom: 126px;
+  }
+
+  .us-map-widget .trend-section svg {
+    max-height: 170px;
+  }
+}
