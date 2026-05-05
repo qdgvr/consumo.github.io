@@ -1929,3 +1929,72 @@ a { color: inherit; }
     font-size: 18px;
   }
 }
+
+/* Flat TFR map rendering */
+.globe-map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(42,117,255,.12), transparent 34%),
+    radial-gradient(circle at 50% 50%, rgba(48,192,192,.08), transparent 58%);
+}
+
+.map-context path,
+.context-country {
+  fill: rgba(40, 48, 58, .30);
+  stroke: rgba(255,255,255,.10);
+  stroke-width: .7;
+  vector-effect: non-scaling-stroke;
+}
+
+.selected-country {
+  fill: rgba(48, 192, 192, .13);
+  stroke: rgba(231, 231, 231, .88);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 5px rgba(48,192,192,.22));
+}
+
+.tfr-point {
+  stroke: #0b0b0b;
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 8px rgba(48,192,192,.45));
+  cursor: pointer;
+}
+
+.globe-hero[data-region="title"] .map-context,
+.globe-hero[data-region="title"] .map-selected,
+.globe-hero[data-region="title"] .map-points {
+  opacity: .08;
+}
+
+.globe-hero[data-region="title"] .globe-hud {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.globe-hud {
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.globe-title-chapter,
+.globe-title-chapter.active {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.globe-title-chapter a {
+  background: rgba(48,192,192,.10);
+}
+
+.globe-title-chapter h2,
+.globe-title-chapter p {
+  text-shadow: 0 18px 58px rgba(0,0,0,.72);
+}

@@ -6,8 +6,8 @@
   <title>Comunicación | Ocio digital y fecundidad en Estados Unidos</title>
   <meta name="description" content="Reportaje de datos sobre ocio digital, tiempo exterior y fecundidad en Estados Unidos entre 2005 y 2024.">
   <style>html,body{margin:0;background:#111;color:#f5f5f5}</style>
-  <link rel="stylesheet" href="wp-dark-article-v10.css?v=tfr-scrolly-1">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; if (!location.hash) scrollTo(0, 0);</script>
+  <link rel="stylesheet" href="wp-dark-article-v10.css?v=tfr-flatmap-1">
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
@@ -33,9 +33,9 @@
   </header>
 
   <main id="main" class="page">
-    <section class="globe-hero" id="globe-hero" aria-label="Prólogo interactivo sobre fecundidad comparada">
+    <section class="globe-hero" id="globe-hero" data-region="europe" aria-label="Prólogo interactivo sobre fecundidad comparada">
       <div class="globe-stage">
-        <canvas id="globe-canvas" aria-hidden="true"></canvas>
+        <svg id="globe-map" class="globe-map" role="img" aria-label="Mapa comparado de fecundidad total"></svg>
         <div class="globe-shade"></div>
 
         <div class="globe-hud" aria-live="polite">
@@ -90,11 +90,6 @@
           <a class="preferred" href="#us-map-widget"><span>G</span>Explorar los mapas</a>
         </div>
       </header>
-
-      <figure class="lead-figure">
-        <img class="lead-photo lead-image" src="assets/digital-ocio-ai-illustration.png" alt="Ilustración de una pareja en casa usando pantallas digitales por la noche">
-        <figcaption>Una pareja observa contenidos digitales en casa durante la noche. Esta imagen es una ilustración generada mediante inteligencia artificial. <span>(Comunicación)</span></figcaption>
-      </figure>
 
       <div class="byline">
         <div class="avatar" aria-hidden="true"></div>
@@ -370,7 +365,7 @@
       </section>
     </article>
   </main>
-  <script src="globe-hero.js?v=tfr-scrolly-1"></script>
+  <script src="globe-hero.js?v=tfr-flatmap-1"></script>
   <script src="us-map-widget.js"></script>
 </body>
 </html>
