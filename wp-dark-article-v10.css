@@ -2511,3 +2511,32 @@ a { color: inherit; }
     max-height: none;
   }
 }
+
+/* Final layout pass: keep the globe's bottom fade, remove the side veils that soften text. */
+.globe-hero::before {
+  background: linear-gradient(180deg, rgba(7,8,10,.02) 0%, rgba(7,8,10,.12) 58%, rgba(7,8,10,.92) 100%);
+}
+
+/* Wide-screen map composition: keep HUD elements in their own lanes. */
+@media (min-width: 1101px) and (min-height: 761px) {
+  .us-map-widget .state-card {
+    top: clamp(245px, 30vh, 330px);
+    left: clamp(28px, 4.2vw, 64px);
+    right: auto;
+    width: min(520px, 28vw);
+  }
+
+  .us-map-widget .map-shell {
+    inset: clamp(90px, 12vh, 145px) clamp(28px, 4vw, 72px) clamp(250px, 28vh, 330px) clamp(520px, 34vw, 700px);
+  }
+
+  .us-map-widget .trend-section {
+    left: clamp(600px, 38vw, 780px);
+    right: clamp(480px, 25vw, 560px);
+    bottom: clamp(22px, 4vh, 48px);
+  }
+
+  .us-map-widget .ranking-section {
+    width: min(420px, 24vw);
+  }
+}
