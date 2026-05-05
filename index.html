@@ -6,7 +6,8 @@
   <title>Comunicación | Ocio digital y fecundidad en Estados Unidos</title>
   <meta name="description" content="Reportaje de datos sobre ocio digital, tiempo exterior y fecundidad en Estados Unidos entre 2005 y 2024.">
   <style>html,body{margin:0;background:#111;color:#f5f5f5}</style>
-  <link rel="stylesheet" href="wp-dark-article-v10.css?v=reportaje-body-1">
+  <link rel="stylesheet" href="wp-dark-article-v10.css?v=globe-hero-2">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
@@ -32,7 +33,53 @@
   </header>
 
   <main id="main" class="page">
-    <article class="article">
+    <section class="globe-hero" id="globe-hero" aria-label="Prólogo interactivo sobre ocio digital y fecundidad">
+      <canvas id="globe-canvas" aria-hidden="true"></canvas>
+      <div class="globe-shade"></div>
+
+      <aside class="globe-panel globe-panel-left" aria-label="Variables del reportaje">
+        <p class="globe-eyebrow">Prólogo interactivo</p>
+        <h2>Del salón al calendario demográfico</h2>
+        <p>Gire el globo, cambie el año y observe cómo se cruzan ocio digital, tiempo exterior y fecundidad por edad en Estados Unidos.</p>
+        <div class="globe-modes" id="globe-modes" aria-label="Seleccionar variable visualizada">
+          <button data-mode="digital" class="active">Ocio digital</button>
+          <button data-mode="outside">Tiempo exterior</button>
+          <button data-mode="fertility">Fecundidad 20-24</button>
+          <button data-mode="maternal">Edad materna</button>
+        </div>
+        <div class="globe-state-list" id="globe-state-list"></div>
+      </aside>
+
+      <div class="globe-copy">
+        <p class="section-label">Reportaje de datos</p>
+        <h1>Ocio digital, tiempo fuera de casa y una maternidad que se aplaza</h1>
+        <p>Un recorrido visual por 20 años de cambios en el uso del tiempo y la fecundidad estadounidense.</p>
+        <a href="#article-start" class="globe-scroll-link">Bajar al reportaje</a>
+      </div>
+
+      <aside class="globe-panel globe-panel-right" aria-label="Controles del globo">
+        <p class="globe-control-title">Controles</p>
+        <label><input type="checkbox" id="globe-toggle-earth" checked> Tierra</label>
+        <label><input type="checkbox" id="globe-toggle-wire" checked> Malla</label>
+        <label><input type="checkbox" id="globe-toggle-stars" checked> Estrellas</label>
+        <label><input type="checkbox" id="globe-toggle-arcs" checked> Conexiones</label>
+        <label><input type="checkbox" id="globe-toggle-pulse" checked> Pulso</label>
+        <div class="globe-slider"><span>Rotación</span><input type="range" id="globe-rotation-speed" min="0" max="1.8" step="0.05" value="0.45"></div>
+        <div class="globe-slider"><span>Arcos</span><input type="range" id="globe-arc-strength" min="0.15" max="1" step="0.05" value="0.62"></div>
+        <div class="globe-slider"><span>Pulso</span><input type="range" id="globe-pulse-speed" min="0.3" max="2.4" step="0.1" value="1.1"></div>
+        <div class="globe-slider"><span>Puntos</span><input type="range" id="globe-point-size" min="0.6" max="1.8" step="0.05" value="1"></div>
+        <button class="globe-reset" id="globe-reset">Recentrar cámara</button>
+      </aside>
+
+      <div class="globe-tooltip" id="globe-tooltip"></div>
+      <div class="globe-yearbar" aria-label="Selector temporal del prólogo">
+        <span id="globe-year-label">2024</span>
+        <input type="range" id="globe-year" min="2005" max="2024" value="2024" step="1">
+        <small>2005</small><small>2024</small>
+      </div>
+    </section>
+
+    <article class="article" id="article-start">
       <header class="headline-block">
         <p class="section-label">Reportaje de datos</p>
         <h1>Más ocio digital, menos tiempo fuera: el mapa del retraso de la maternidad en Estados Unidos</h1>
@@ -328,6 +375,7 @@
       </section>
     </article>
   </main>
+  <script src="globe-hero.js"></script>
   <script src="us-map-widget.js"></script>
 </body>
 </html>
