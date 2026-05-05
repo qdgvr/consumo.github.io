@@ -323,7 +323,7 @@
     if (ui.statline) ui.statline.innerHTML = topBottomText(rowsFor(state.activeRegion));
     if (ui.selected) {
       const row = state.selectedRow && (state.activeRegion === 'title' || state.selectedRow.region === state.activeRegion) ? state.selectedRow : null;
-      ui.selected.innerHTML = row ? `<strong>${row.name}</strong><span>TFR ${row.tfr.toFixed(2)} hijos por mujer</span>` : '';
+      ui.selected.innerHTML = row ? `<strong>${row.name}</strong><span>TFR ${row.tfr.toFixed(2)} hijos por mujer</span><small>${row.year} · ${displayGroup(row)}</small>` : '';
       ui.selected.classList.toggle('show', Boolean(row));
     }
   }
@@ -353,7 +353,7 @@
     state.targetRotation = nextRotation;
     state.targetCameraZ = cfg.cameraZ;
     state.pausedUntil = performance.now() + 900;
-    ui.tooltip.classList.remove('show', 'fixed');
+    if (ui.tooltip) ui.tooltip.classList.remove('show', 'fixed');
     updatePoints();
   }
 
@@ -392,16 +392,7 @@
       hover = hit ? hit.row : null;
     }
     state.hoverRow = hover;
-    if (hover && !dragging) {
-      const row = hover;
-      const rect = canvas.getBoundingClientRect();
-      ui.tooltip.innerHTML = `<strong>${row.name}</strong><span>TFR: ${row.tfr.toFixed(2)} hijos por mujer</span><small>${row.year} · ${displayGroup(row)}</small>`;
-      ui.tooltip.style.left = `${(pointer.x + 1) * rect.width / 2 + 16}px`;
-      ui.tooltip.style.top = `${(-pointer.y + 1) * rect.height / 2 + 16}px`;
-      ui.tooltip.classList.add('show');
-    } else {
-      ui.tooltip.classList.remove('show');
-    }
+    if (ui.tooltip) ui.tooltip.classList.remove('show', 'fixed');
   }
 
   function bindPointer() {
@@ -438,13 +429,13 @@
       if (wasClick && state.hoverRow) {
         state.selectedRow = state.hoverRow;
         updateHud();
-        ui.tooltip.classList.remove('show');
+        if (ui.tooltip) ui.tooltip.classList.remove('show', 'fixed');
       }
       try { canvas.releasePointerCapture(event.pointerId); } catch (_) {}
     });
     canvas.addEventListener('pointerleave', () => {
       dragging = false;
-      ui.tooltip.classList.remove('show');
+      if (ui.tooltip) ui.tooltip.classList.remove('show', 'fixed');
     });
   }
 

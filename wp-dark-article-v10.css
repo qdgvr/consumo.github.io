@@ -2057,6 +2057,13 @@ a { color: inherit; }
   font-weight: 700;
 }
 
+.globe-selected small {
+  display: block;
+  margin-top: 7px;
+  color: rgba(245,245,245,.62);
+  font: 700 13px/1.25 var(--ui-font);
+}
+
 /* Globe scroll triggers stay active, but the text cards are removed visually. */
 .globe-hero {
   min-height: 390vh;
@@ -2517,6 +2524,12 @@ a { color: inherit; }
   background: linear-gradient(180deg, rgba(7,8,10,.02) 0%, rgba(7,8,10,.12) 58%, rgba(7,8,10,.92) 100%);
 }
 
+.globe-tooltip,
+.globe-tooltip.show,
+.globe-tooltip.fixed {
+  display: none !important;
+}
+
 /* Wide-screen map composition: keep HUD elements in their own lanes. */
 @media (min-width: 1101px) and (min-height: 761px) {
   .us-map-widget .state-card {
@@ -2531,12 +2544,41 @@ a { color: inherit; }
   }
 
   .us-map-widget .trend-section {
-    left: clamp(600px, 38vw, 780px);
-    right: clamp(480px, 25vw, 560px);
+    left: clamp(560px, 34vw, 700px);
+    right: clamp(520px, 29vw, 620px);
     bottom: clamp(22px, 4vh, 48px);
   }
 
   .us-map-widget .ranking-section {
     width: min(420px, 24vw);
+  }
+}
+
+@media (max-height: 760px), (max-width: 760px) {
+  .us-map-widget .map-shell {
+    height: auto;
+    min-height: 0;
+    margin: 10px 0 8px;
+    padding-top: 78px;
+    box-sizing: border-box;
+  }
+
+  .us-map-widget .map-target {
+    height: auto;
+  }
+
+  .us-map-widget .map-target svg {
+    display: block;
+    height: auto;
+  }
+
+  .us-map-widget .map-search-btn,
+  .us-map-widget .year-select,
+  .us-map-widget .map-zoom {
+    top: 0;
+  }
+
+  .us-map-widget .legend-steps {
+    margin-top: 10px;
   }
 }
