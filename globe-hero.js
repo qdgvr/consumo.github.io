@@ -17,6 +17,7 @@
   const ui = {
     title: document.getElementById('globe-stage-title'),
     kicker: document.getElementById('globe-stage-kicker'),
+    selected: document.getElementById('globe-selected'),
     summary: document.getElementById('globe-stage-summary'),
     statline: document.getElementById('globe-statline'),
     tooltip: document.getElementById('globe-tooltip')
@@ -37,7 +38,7 @@
       colorB: 0xffd26a
     },
     east_asia: {
-      title: 'Asia oriental',
+      title: 'El extremo asiático',
       kicker: 'TFR · hijos por mujer',
       summary: 'Corea del Sur, China y Japón en la zona de fecundidad más baja del recorrido.',
       center: { lat: 36, lon: 126 },
@@ -85,6 +86,10 @@
   const earth = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 96), earthMat);
   group.add(earth);
 
+  const fillMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.88, depthWrite: false });
+  const fillLayer = new THREE.Mesh(new THREE.SphereGeometry(R * 1.006, 128, 128), fillMat);
+  group.add(fillLayer);
+
   new THREE.TextureLoader().load('https://cdn.jsdelivr.net/npm/three-globe/example/img/earth-night.jpg', tex => {
     tex.anisotropy = 4;
     earthMat.map = tex;
@@ -105,8 +110,7 @@
   group.add(glow);
 
   const borderGroup = new THREE.Group();
-  const pointGroup = new THREE.Group();
-  group.add(borderGroup, pointGroup);
+  group.add(borderGroup);
 
   const starGeo = new THREE.BufferGeometry();
   const starPos = [];
@@ -125,6 +129,7 @@
   let dragging = false;
   let lastX = 0;
   let lastY = 0;
+  let dragDistance = 0;
   let hover = null;
 
   const state = {
@@ -133,6 +138,10 @@
     world: null,
     usStates: null,
     points: [],
+    activeFeatureRows: [],
+    rowByCountryName: new Map(),
+    rowByStateName: new Map(),
+    selectedRow: null,
     globalMin: 0.7,
     globalMax: 2.1,
     targetRotation: regionRotation(REGIONS.europe.center),
@@ -166,29 +175,6 @@
     return ca.lerp(cb, Math.max(0, Math.min(1, t)));
   }
 
-  function pointSize(row) {
-    const t = (row.tfr - state.globalMin) / Math.max(state.globalMax - state.globalMin, 0.001);
-    const base = row.type === 'state' ? 0.082 : 0.115;
-    return base + Math.max(0, Math.min(1, t)) * 0.07;
-  }
-
-  function makeCircleTexture() {
-    const c = document.createElement('canvas');
-    c.width = 96;
-    c.height = 96;
-    const ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, 96, 96);
-    ctx.beginPath();
-    ctx.arc(48, 48, 34, 0, Math.PI * 2);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.lineWidth = 8;
-    ctx.strokeStyle = 'rgba(0,0,0,.92)';
-    ctx.stroke();
-    return new THREE.CanvasTexture(c);
-  }
-  const circleTexture = makeCircleTexture();
-
   function clearGroup(target) {
     while (target.children.length) {
       const obj = target.children.pop();
@@ -204,6 +190,26 @@
 
   function featureName(feature) {
     return feature.properties.name || feature.properties.NAME;
+  }
+
+  function buildRowLookups() {
+    state.rowByCountryName = new Map();
+    state.rowByStateName = new Map();
+    state.rows.forEach(row => {
+      if (row.type === 'state') state.rowByStateName.set(row.name, row);
+      if (row.type === 'country') state.rowByCountryName.set(COUNTRY_NAME[row.id] || row.name, row);
+    });
+  }
+
+  function rowForFeature(feature) {
+    const stateName = feature.properties && feature.properties.NAME;
+    const countryName = featureName(feature);
+    return state.rowByStateName.get(stateName) || state.rowByCountryName.get(countryName) || null;
+  }
+
+  function displayGroup(row) {
+    if (row.region === 'east_asia') return 'El extremo asiático';
+    return row.group;
   }
 
   function featuresForRegion(region) {
@@ -222,6 +228,12 @@
     }
     const names = new Set(rows.map(d => COUNTRY_NAME[d.id] || d.name));
     return state.world.features.filter(feature => names.has(featureName(feature)));
+  }
+
+  function featureRowsForRegion(region) {
+    return featuresForRegion(region)
+      .map(feature => ({ feature, row: rowForFeature(feature) }))
+      .filter(item => item.row);
   }
 
   function forEachRing(geometry, cb) {
@@ -254,6 +266,46 @@
     borderGroup.add(new THREE.LineSegments(geom, mat));
   }
 
+  function buildFillTexture() {
+    if (!window.d3 || !state.world || !state.usStates) return;
+    const width = 4096;
+    const height = 2048;
+    const c = document.createElement('canvas');
+    c.width = width;
+    c.height = height;
+    const ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, width, height);
+
+    const projection = d3.geoEquirectangular()
+      .translate([width / 2, height / 2])
+      .scale(width / (Math.PI * 2))
+      .precision(0.08);
+    const path = d3.geoPath(projection, ctx);
+    const features = [
+      ...state.world.features.map(feature => ({ feature, row: rowForFeature(feature) })),
+      ...state.usStates.features.map(feature => ({ feature, row: rowForFeature(feature) }))
+    ].filter(item => item.row);
+
+    features.forEach(({ feature, row }) => {
+      const color = colorFor(row, REGIONS[row.region] || REGIONS.europe);
+      ctx.beginPath();
+      path(feature);
+      ctx.fillStyle = `#${color.getHexString()}`;
+      ctx.globalAlpha = row.type === 'state' ? 0.78 : 0.82;
+      ctx.fill('evenodd');
+      ctx.globalAlpha = 0.42;
+      ctx.strokeStyle = 'rgba(255,255,255,.72)';
+      ctx.lineWidth = row.type === 'state' ? 0.85 : 1.1;
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+
+    if (fillMat.map) fillMat.map.dispose();
+    fillMat.map = new THREE.CanvasTexture(c);
+    fillMat.map.anisotropy = 4;
+    fillMat.needsUpdate = true;
+  }
+
   function topBottomText(rows) {
     if (!rows.length) return '';
     const sorted = [...rows].sort((a, b) => b.tfr - a.tfr);
@@ -265,56 +317,32 @@
 
   function updateHud() {
     const cfg = REGIONS[state.activeRegion] || REGIONS.europe;
-    const rows = rowsFor(state.activeRegion);
     ui.kicker.textContent = cfg.kicker;
     ui.title.textContent = cfg.title;
     if (ui.summary) ui.summary.textContent = cfg.summary;
-    if (ui.statline) ui.statline.innerHTML = topBottomText(rows);
+    if (ui.statline) ui.statline.innerHTML = topBottomText(rowsFor(state.activeRegion));
+    if (ui.selected) {
+      const row = state.selectedRow && (state.activeRegion === 'title' || state.selectedRow.region === state.activeRegion) ? state.selectedRow : null;
+      ui.selected.innerHTML = row ? `<strong>${row.name}</strong><span>TFR ${row.tfr.toFixed(2)} hijos por mujer</span>` : '';
+      ui.selected.classList.toggle('show', Boolean(row));
+    }
   }
 
   function buildPoints() {
-    clearGroup(pointGroup);
     state.points = [];
-    state.rows.forEach(row => {
-      const pos = latLonToVec(row.lat, row.lon, R * 1.04);
-      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: circleTexture,
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.95,
-        depthWrite: false
-      }));
-      sprite.position.copy(pos);
-      sprite.userData.row = row;
-      pointGroup.add(sprite);
-      state.points.push(sprite);
-    });
+    buildFillTexture();
   }
 
   function updatePoints() {
-    const cfg = REGIONS[state.activeRegion] || REGIONS.europe;
-    const activeRows = rowsFor(state.activeRegion);
-    const activeIds = new Set(activeRows.map(row => row.id));
-    const showAll = state.activeRegion === 'title';
-
-    state.points.forEach(sprite => {
-      const row = sprite.userData.row;
-      const active = showAll || activeIds.has(row.id);
-      sprite.visible = active;
-      if (!active) return;
-      const size = pointSize(row) * (showAll ? 0.75 : 1);
-      sprite.scale.set(size, size, 1);
-      sprite.material.color.copy(colorFor(row, cfg));
-      sprite.material.opacity = showAll ? 0.62 : 0.96;
-    });
-
-    buildBorders(featuresForRegion(state.activeRegion));
+    state.activeFeatureRows = featureRowsForRegion(state.activeRegion);
+    buildBorders(state.activeFeatureRows.map(item => item.feature));
     updateHud();
   }
 
   function activateRegion(region) {
     if (!REGIONS[region]) return;
     state.activeRegion = region;
+    if (state.selectedRow && region !== 'title' && state.selectedRow.region !== region) state.selectedRow = null;
     root.dataset.region = region;
     chapters.forEach(chapter => chapter.classList.toggle('active', chapter.dataset.region === region));
 
@@ -351,12 +379,23 @@
 
   function updateHover() {
     raycaster.setFromCamera(pointer, camera);
-    const hits = raycaster.intersectObjects(state.points.filter(p => p.visible), false);
-    hover = hits[0] && hits[0].object ? hits[0].object : null;
-    if (hover && hover.userData.row && !dragging) {
-      const row = hover.userData.row;
+    const hits = raycaster.intersectObject(earth, false);
+    hover = null;
+    if (hits[0] && !dragging && window.d3) {
+      const local = group.worldToLocal(hits[0].point.clone());
+      const r = local.length();
+      const lat = Math.asin(local.y / r) * 180 / Math.PI;
+      let lon = Math.atan2(local.z, -local.x) * 180 / Math.PI - 180;
+      if (lon < -180) lon += 360;
+      if (lon > 180) lon -= 360;
+      const hit = state.activeFeatureRows.find(item => d3.geoContains(item.feature, [lon, lat]));
+      hover = hit ? hit.row : null;
+    }
+    state.hoverRow = hover;
+    if (hover && !dragging) {
+      const row = hover;
       const rect = canvas.getBoundingClientRect();
-      ui.tooltip.innerHTML = `<strong>${row.name}</strong><span>TFR: ${row.tfr.toFixed(2)} hijos por mujer</span><small>${row.year} · ${row.group}</small>`;
+      ui.tooltip.innerHTML = `<strong>${row.name}</strong><span>TFR: ${row.tfr.toFixed(2)} hijos por mujer</span><small>${row.year} · ${displayGroup(row)}</small>`;
       ui.tooltip.style.left = `${(pointer.x + 1) * rect.width / 2 + 16}px`;
       ui.tooltip.style.top = `${(-pointer.y + 1) * rect.height / 2 + 16}px`;
       ui.tooltip.classList.add('show');
@@ -367,7 +406,11 @@
 
   function bindPointer() {
     canvas.addEventListener('pointerdown', event => {
+      const rect = canvas.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
       dragging = true;
+      dragDistance = 0;
       lastX = event.clientX;
       lastY = event.clientY;
       canvas.setPointerCapture(event.pointerId);
@@ -380,6 +423,7 @@
       if (dragging) {
         const dx = event.clientX - lastX;
         const dy = event.clientY - lastY;
+        dragDistance += Math.abs(dx) + Math.abs(dy);
         group.rotation.y += dx * 0.005;
         group.rotation.x = Math.max(-1.05, Math.min(1.05, group.rotation.x + dy * 0.003));
         state.targetRotation = { x: group.rotation.x, y: group.rotation.y, z: 0 };
@@ -388,7 +432,14 @@
       }
     });
     canvas.addEventListener('pointerup', event => {
+      const wasClick = dragDistance < 8;
       dragging = false;
+      if (wasClick) updateHover();
+      if (wasClick && state.hoverRow) {
+        state.selectedRow = state.hoverRow;
+        updateHud();
+        ui.tooltip.classList.remove('show');
+      }
       try { canvas.releasePointerCapture(event.pointerId); } catch (_) {}
     });
     canvas.addEventListener('pointerleave', () => {
@@ -433,6 +484,7 @@
       state.rows = tfr.points || [];
       state.world = world;
       state.usStates = usStates;
+      buildRowLookups();
       const values = state.rows.map(row => row.tfr).filter(Number.isFinite);
       state.globalMin = Math.min(...values);
       state.globalMax = Math.max(...values);

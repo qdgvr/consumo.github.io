@@ -41,9 +41,14 @@ a { color: inherit; }
 .skip-link:focus { top: 18px; }
 
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 240;
   height: 58px;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .topbar {
@@ -2027,6 +2032,42 @@ a { color: inherit; }
   display: none !important;
 }
 
+.globe-selected {
+  display: none;
+  margin-top: 16px;
+  color: rgba(245,245,245,.76);
+  font: 400 15px/1.35 var(--ui-font);
+  text-shadow: 0 14px 42px rgba(0,0,0,.72);
+}
+
+.globe-selected.show {
+  display: block;
+}
+
+.globe-selected strong {
+  display: block;
+  color: #fff;
+  font: 800 18px/1.16 var(--ui-font);
+}
+
+.globe-selected span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(48,192,192,.86);
+  font-weight: 700;
+}
+
+/* Globe scroll triggers stay active, but the text cards are removed visually. */
+.globe-hero {
+  min-height: 390vh;
+}
+
+.globe-chapter,
+.globe-chapter.active {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
 /* Immersive US map interface: keep controls, remove card frames */
 .us-map-widget {
   --map-bg: #080a0d;
@@ -2410,5 +2451,63 @@ a { color: inherit; }
 
   .us-map-widget .trend-section svg {
     max-height: 170px;
+  }
+}
+
+@media (max-height: 760px), (max-width: 760px) {
+  .us-map-widget .metric-block {
+    min-height: auto;
+    padding: 22px;
+    overflow: visible;
+  }
+
+  .us-map-widget .metric-heading {
+    position: relative;
+    width: auto;
+    margin: 24px 0 18px;
+  }
+
+  .us-map-widget .metric-heading h2 {
+    font-size: clamp(30px, 9vw, 44px);
+    line-height: 1;
+  }
+
+  .us-map-widget .map-shell {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: min(62vh, 560px);
+    min-height: 340px;
+    margin: 22px 0 18px;
+  }
+
+  .us-map-widget .legend-steps,
+  .us-map-widget .state-card,
+  .us-map-widget .ranking-section,
+  .us-map-widget .trend-section {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    margin: 18px 0 0;
+  }
+
+  .us-map-widget .state-card {
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .us-map-widget .ranking-section {
+    bottom: auto;
+  }
+
+  .us-map-widget .trend-section {
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
+  .us-map-widget .trend-section svg {
+    max-height: none;
   }
 }
