@@ -6,7 +6,7 @@
   <title>Comunicación | Ocio digital y fecundidad en Estados Unidos</title>
   <meta name="description" content="Reportaje de datos sobre ocio digital, tiempo exterior y fecundidad en Estados Unidos entre 2005 y 2024.">
   <style>html,body{margin:0;background:#111;color:#f5f5f5}</style>
-  <link rel="stylesheet" href="wp-dark-article-v10.css?v=scrolly-globe-1">
+  <link rel="stylesheet" href="wp-dark-article-v10.css?v=tfr-scrolly-1">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -33,73 +33,42 @@
   </header>
 
   <main id="main" class="page">
-    <section class="globe-hero" id="globe-hero" aria-label="Prólogo interactivo sobre ocio digital y fecundidad">
+    <section class="globe-hero" id="globe-hero" aria-label="Prólogo interactivo sobre fecundidad comparada">
       <div class="globe-stage">
-      <canvas id="globe-canvas" aria-hidden="true"></canvas>
-      <div class="globe-shade"></div>
+        <canvas id="globe-canvas" aria-hidden="true"></canvas>
+        <div class="globe-shade"></div>
 
-      <aside class="globe-panel globe-panel-left" aria-label="Variables del reportaje">
-        <p class="globe-eyebrow">Prólogo interactivo</p>
-        <h2>Del salón al calendario demográfico</h2>
-        <p>Gire el globo, cambie el año y observe cómo se cruzan ocio digital, tiempo exterior y fecundidad por edad en Estados Unidos.</p>
-        <div class="globe-modes" id="globe-modes" aria-label="Seleccionar variable visualizada">
-          <button data-mode="digital" class="active">Ocio digital</button>
-          <button data-mode="outside">Tiempo exterior</button>
-          <button data-mode="fertility">Fecundidad 20-24</button>
-          <button data-mode="maternal">Edad materna</button>
+        <div class="globe-hud" aria-live="polite">
+          <p id="globe-stage-kicker">TFR · hijos por mujer</p>
+          <h2 id="globe-stage-title">Europa</h2>
+          <p id="globe-stage-summary">Desplaza para recorrer el mapa comparado de fecundidad.</p>
+          <div class="globe-statline" id="globe-statline"></div>
         </div>
-        <div class="globe-state-list" id="globe-state-list"></div>
-      </aside>
 
-      <div class="globe-copy">
-        <p class="section-label">Reportaje de datos</p>
-        <h1>Ocio digital, tiempo fuera de casa y una maternidad que se aplaza</h1>
-        <p>Un recorrido visual por 20 años de cambios en el uso del tiempo y la fecundidad estadounidense.</p>
-        <a href="#article-start" class="globe-scroll-link">Bajar al reportaje</a>
-      </div>
-
-      <aside class="globe-panel globe-panel-right" aria-label="Controles del globo">
-        <p class="globe-control-title">Controles</p>
-        <label><input type="checkbox" id="globe-toggle-earth" checked> Tierra</label>
-        <label><input type="checkbox" id="globe-toggle-wire" checked> Malla</label>
-        <label><input type="checkbox" id="globe-toggle-stars" checked> Estrellas</label>
-        <label><input type="checkbox" id="globe-toggle-arcs" checked> Conexiones</label>
-        <label><input type="checkbox" id="globe-toggle-pulse" checked> Pulso</label>
-        <div class="globe-slider"><span>Rotación</span><input type="range" id="globe-rotation-speed" min="0" max="1.8" step="0.05" value="0.45"></div>
-        <div class="globe-slider"><span>Arcos</span><input type="range" id="globe-arc-strength" min="0.15" max="1" step="0.05" value="0.62"></div>
-        <div class="globe-slider"><span>Pulso</span><input type="range" id="globe-pulse-speed" min="0.3" max="2.4" step="0.1" value="1.1"></div>
-        <div class="globe-slider"><span>Puntos</span><input type="range" id="globe-point-size" min="0.6" max="1.8" step="0.05" value="1"></div>
-        <button class="globe-reset" id="globe-reset">Recentrar cámara</button>
-      </aside>
-
-      <div class="globe-tooltip" id="globe-tooltip"></div>
-      <div class="globe-yearbar" aria-label="Selector temporal del prólogo">
-        <span id="globe-year-label">2024</span>
-        <input type="range" id="globe-year" min="2005" max="2024" value="2024" step="1">
-        <small>2005</small><small>2024</small>
-      </div>
+        <div class="globe-tooltip" id="globe-tooltip"></div>
+        <div class="globe-scroll-cue">Desplaza para empezar</div>
       </div>
 
       <div class="globe-scroll-chapters" aria-label="Relato guiado del prólogo">
-        <section class="globe-chapter" data-mode="digital" data-year="2020">
+        <section class="globe-chapter" data-region="europe">
           <span>01</span>
-          <h2>Primero aparece la pantalla</h2>
-          <p>El globo permanece fijo mientras avanza el relato. En 2020, el ocio digital alcanza su máximo en la serie estatal y el punto de partida se vuelve visible: más tiempo cotidiano alrededor de la televisión, los videojuegos y el ordenador recreativo.</p>
+          <h2>Europa abre el recorrido</h2>
+          <p>El primer plano reúne los países de la Unión Europea, Suiza y el entorno nórdico. La escala no muestra porcentajes: muestra hijos por mujer, el indicador clásico de fecundidad total.</p>
         </section>
-        <section class="globe-chapter" data-mode="outside" data-year="2024">
+        <section class="globe-chapter" data-region="east_asia">
           <span>02</span>
-          <h2>Después se estrecha la calle</h2>
-          <p>Al pasar al tiempo exterior, los puntos cambian de escala. La pregunta ya no es sólo cuánto se mira una pantalla, sino cuánto del día queda para actividades presenciales fuera del hogar.</p>
+          <h2>Después, el extremo asiático</h2>
+          <p>Corea del Sur, China y Japón aparecen juntos porque representan una frontera demográfica extrema: economías avanzadas o industrializadas con fecundidad situada muy por debajo del reemplazo generacional.</p>
         </section>
-        <section class="globe-chapter" data-mode="fertility" data-year="2024">
+        <section class="globe-chapter" data-region="united_states">
           <span>03</span>
-          <h2>La fecundidad joven se repliega</h2>
-          <p>El mapa cambia de lenguaje: ya no muestra horas, sino nacimientos por 1.000 mujeres. La caída se concentra especialmente en edades jóvenes, donde el calendario reproductivo se desplaza con más fuerza.</p>
+          <h2>Finalmente, Estados Unidos por estados</h2>
+          <p>El globo gira hacia Norteamérica. Aquí cada punto representa un estado o Washington D. C.; la cifra estatal se estima a partir de las tasas específicas por edad del panel usado en el estudio.</p>
         </section>
-        <section class="globe-chapter" data-mode="maternal" data-year="2024">
-          <span>04</span>
-          <h2>El calendario se mueve hacia más tarde</h2>
-          <p>La edad media materna resume la transición. La demografía no aparece de golpe en el hospital: empieza antes, en la distribución del tiempo, los lugares de encuentro y la posibilidad cotidiana de construir vínculos.</p>
+        <section class="globe-chapter globe-title-chapter" data-region="title">
+          <span>REPORTAJE DE DATOS</span>
+          <h2>Ocio digital, tiempo fuera de casa y una maternidad que se aplaza</h2>
+          <p>Un recorrido visual por 20 años de cambios en el uso del tiempo y la fecundidad estadounidense.</p>
           <a href="#article-start">Entrar en el reportaje</a>
         </section>
       </div>
@@ -401,7 +370,7 @@
       </section>
     </article>
   </main>
-  <script src="globe-hero.js?v=scrolly-globe-1"></script>
+  <script src="globe-hero.js?v=tfr-scrolly-1"></script>
   <script src="us-map-widget.js"></script>
 </body>
 </html>
