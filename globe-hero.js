@@ -24,18 +24,18 @@
   };
 
   const COUNTRY_NAME = {
-    AUT: 'Austria', BEL: 'Belgium', BGR: 'Bulgaria', HRV: 'Croatia', CYP: 'Cyprus', CZE: 'Czech Republic', DNK: 'Denmark', EST: 'Estonia', FIN: 'Finland', FRA: 'France', DEU: 'Germany', GRC: 'Greece', HUN: 'Hungary', IRL: 'Ireland', ITA: 'Italy', LVA: 'Latvia', LTU: 'Lithuania', LUX: 'Luxembourg', MLT: 'Malta', NLD: 'Netherlands', POL: 'Poland', PRT: 'Portugal', ROU: 'Romania', SVK: 'Slovakia', SVN: 'Slovenia', ESP: 'Spain', SWE: 'Sweden', CHE: 'Switzerland', NOR: 'Norway', ISL: 'Iceland', KOR: 'South Korea', CHN: 'China', JPN: 'Japan'
+    AUT: 'Austria', BEL: 'Belgium', BGR: 'Bulgaria', HRV: 'Croatia', CYP: 'Cyprus', CZE: 'Czech Republic', DNK: 'Denmark', EST: 'Estonia', FIN: 'Finland', FRA: 'France', DEU: 'Germany', GRC: 'Greece', HUN: 'Hungary', IRL: 'Ireland', ITA: 'Italy', LVA: 'Latvia', LTU: 'Lithuania', LUX: 'Luxembourg', MLT: 'Malta', NLD: 'Netherlands', POL: 'Poland', PRT: 'Portugal', ROU: 'Romania', SVK: 'Slovakia', SVN: 'Slovenia', ESP: 'Spain', SWE: 'Sweden', CHE: 'Switzerland', NOR: 'Norway', ISL: 'Iceland', GBR: 'United Kingdom', UKR: 'Ukraine', BLR: 'Belarus', RUS: 'Russia', ALB: 'Albania', BIH: 'Bosnia and Herzegovina', XKX: 'Kosovo', MKD: 'Macedonia', MNE: 'Montenegro', SRB: 'Republic of Serbia', KOR: 'South Korea', CHN: 'China', JPN: 'Japan'
   };
 
   const REGIONS = {
     europe: {
       title: 'Europa',
       kicker: 'TFR · hijos por mujer',
-      summary: 'Unión Europea, Suiza y países nórdicos incluidos.',
+      summary: 'Unión Europea, Reino Unido, Suiza, países nórdicos, Balcanes no comunitarios, Ucrania, Bielorrusia y Rusia.',
       center: { lat: 52, lon: 12 },
       cameraZ: 5.35,
-      colorA: 0x2f6df6,
-      colorB: 0xffd26a
+      colorA: 0x264b83,
+      colorB: 0x9fc3ed
     },
     east_asia: {
       title: 'El extremo asiático',
@@ -43,8 +43,8 @@
       summary: 'Corea del Sur, China y Japón en la zona de fecundidad más baja del recorrido.',
       center: { lat: 36, lon: 126 },
       cameraZ: 5.25,
-      colorA: 0x37d8ff,
-      colorB: 0xff5f8f
+      colorA: 0x264b83,
+      colorB: 0x9fc3ed
     },
     united_states: {
       title: 'Estados Unidos',
@@ -52,17 +52,17 @@
       summary: 'Cada punto representa un estado o Washington D. C., calculado desde las tasas específicas por edad del panel.',
       center: { lat: 39, lon: -98 },
       cameraZ: 5.25,
-      colorA: 0x5c7cff,
-      colorB: 0xa5df92
+      colorA: 0x264b83,
+      colorB: 0x9fc3ed
     },
     title: {
-      title: 'Del mapa al reportaje',
+      title: 'El retraso de la maternidad con la vida digital en Estados Unidos',
       kicker: 'Reportaje de datos',
-      summary: 'El mapa deja paso al texto: ocio digital, tiempo fuera de casa y maternidad aplazada.',
+      summary: 'Un recorrido visual por 20 años de cambios en el uso del tiempo y la fecundidad estadounidense.',
       center: { lat: 33, lon: -35 },
       cameraZ: 6.2,
-      colorA: 0x30c0c0,
-      colorB: 0xffffff
+      colorA: 0x264b83,
+      colorB: 0x9fc3ed
     }
   };
 
@@ -468,7 +468,7 @@
     window.addEventListener('scroll', () => requestAnimationFrame(updateFromScroll), { passive: true });
     try {
       const [tfr, world, usStates] = await Promise.all([
-        fetch('data/tfr-globe-data.json?v=tfr-globe-boundaries-1').then(r => r.json()),
+        fetch('data/tfr-globe-data.json?v=tfr-globe-europe-1').then(r => r.json()),
         fetch('data/world-countries.geojson?v=tfr-globe-boundaries-1').then(r => r.json()),
         fetch('us-states.json').then(r => r.json())
       ]);

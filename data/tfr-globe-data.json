@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-05-05",
+  "generated_at": "2026-05-06",
   "indicator": "Total fertility rate, births per woman",
   "sources": {
-    "countries": "World Bank WDI, SP.DYN.TFRT.IN, API last updated 2026-04-08; latest non-null value, mostly 2024.",
+    "countries": "World Bank WDI, SP.DYN.TFRT.IN; latest non-null value, mostly 2024. Additional Europe countries retrieved 2026-05-06.",
     "us_states": "State-level estimate from local research-map-data.csv ASFR_15_19..ASFR_40_44, latest year 2024."
   },
   "regions": {
     "europe": {
-      "n": 30,
-      "mean_tfr": 1.354,
-      "min_tfr": 1.01,
-      "max_tfr": 1.72
+      "n": 40,
+      "mean_tfr": 1.375,
+      "min_tfr": 0.988,
+      "max_tfr": 1.8
     },
     "east_asia": {
       "n": 3,
@@ -1117,6 +1117,136 @@
       "year": 2024,
       "source": "Author calculation from CDC natality/PEP ASFR panel",
       "note": "Estimated as 5 * sum(ASFR 15-44) / 1000; excludes 10-14 and 45-49."
+    },
+    {
+      "id": "GBR",
+      "name": "United Kingdom",
+      "region": "europe",
+      "group": "Europa ampliada",
+      "type": "country",
+      "lat": 55.3781,
+      "lon": -3.436,
+      "tfr": 1.551,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "UKR",
+      "name": "Ukraine",
+      "region": "europe",
+      "group": "Europa ampliada",
+      "type": "country",
+      "lat": 48.3794,
+      "lon": 31.1656,
+      "tfr": 0.988,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "BLR",
+      "name": "Belarus",
+      "region": "europe",
+      "group": "Europa ampliada",
+      "type": "country",
+      "lat": 53.7098,
+      "lon": 27.9534,
+      "tfr": 1.217,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "RUS",
+      "name": "Russia",
+      "region": "europe",
+      "group": "Europa ampliada",
+      "type": "country",
+      "lat": 61.524,
+      "lon": 105.3188,
+      "tfr": 1.418,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "ALB",
+      "name": "Albania",
+      "region": "europe",
+      "group": "Balcanes no UE",
+      "type": "country",
+      "lat": 41.1533,
+      "lon": 20.1683,
+      "tfr": 1.341,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "BIH",
+      "name": "Bosnia and Herzegovina",
+      "region": "europe",
+      "group": "Balcanes no UE",
+      "type": "country",
+      "lat": 43.9159,
+      "lon": 17.6791,
+      "tfr": 1.492,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "XKX",
+      "name": "Kosovo",
+      "region": "europe",
+      "group": "Balcanes no UE",
+      "type": "country",
+      "lat": 42.6026,
+      "lon": 20.903,
+      "tfr": 1.538,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "MKD",
+      "name": "North Macedonia",
+      "region": "europe",
+      "group": "Balcanes no UE",
+      "type": "country",
+      "lat": 41.6086,
+      "lon": 21.7453,
+      "tfr": 1.4,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "MNE",
+      "name": "Montenegro",
+      "region": "europe",
+      "group": "Balcanes no UE",
+      "type": "country",
+      "lat": 42.7087,
+      "lon": 19.3744,
+      "tfr": 1.8,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
+    },
+    {
+      "id": "SRB",
+      "name": "Serbia",
+      "region": "europe",
+      "group": "Balcanes no UE",
+      "type": "country",
+      "lat": 44.0165,
+      "lon": 21.0059,
+      "tfr": 1.64,
+      "year": 2024,
+      "source": "World Bank SP.DYN.TFRT.IN",
+      "note": "Latest non-null World Bank value retrieved 2026-05-06."
     }
   ]
 }
