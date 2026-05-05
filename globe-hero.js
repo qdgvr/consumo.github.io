@@ -2,6 +2,7 @@
   const root = document.getElementById('globe-hero');
   const canvas = document.getElementById('globe-canvas');
   if (!root || !canvas || !window.THREE) return;
+  const stage = root.querySelector('.globe-stage') || root;
 
   const STATE_COORDS = {
     Alabama:[32.8067,-86.7911], Alaska:[61.3707,-152.4044], Arizona:[33.7298,-111.4312], Arkansas:[34.9697,-92.3731], California:[36.1162,-119.6816], Colorado:[39.0598,-105.3111], Connecticut:[41.5978,-72.7554], Delaware:[39.3185,-75.5071], 'District of Columbia':[38.9072,-77.0369], Florida:[27.7663,-81.6868], Georgia:[33.0406,-83.6431], Hawaii:[21.0943,-157.4983], Idaho:[44.2405,-114.4788], Illinois:[40.3495,-88.9861], Indiana:[39.8494,-86.2583], Iowa:[42.0115,-93.2105], Kansas:[38.5266,-96.7265], Kentucky:[37.6681,-84.6701], Louisiana:[31.1695,-91.8678], Maine:[44.6939,-69.3819], Maryland:[39.0639,-76.8021], Massachusetts:[42.2302,-71.5301], Michigan:[43.3266,-84.5361], Minnesota:[45.6945,-93.9002], Mississippi:[32.7416,-89.6787], Missouri:[38.4561,-92.2884], Montana:[46.9219,-110.4544], Nebraska:[41.1254,-98.2681], Nevada:[38.3135,-117.0554], 'New Hampshire':[43.4525,-71.5639], 'New Jersey':[40.2989,-74.5210], 'New Mexico':[34.8405,-106.2485], 'New York':[42.1657,-74.9481], 'North Carolina':[35.6301,-79.8064], 'North Dakota':[47.5289,-99.7840], Ohio:[40.3888,-82.7649], Oklahoma:[35.5653,-96.9289], Oregon:[44.5720,-122.0709], Pennsylvania:[40.5908,-77.2098], 'Rhode Island':[41.6809,-71.5118], 'South Carolina':[33.8569,-80.9450], 'South Dakota':[44.2998,-99.4388], Tennessee:[35.7478,-86.6923], Texas:[31.0545,-97.5635], Utah:[40.1500,-111.8624], Vermont:[44.0459,-72.7107], Virginia:[37.7693,-78.1700], Washington:[47.4009,-121.4905], 'West Virginia':[38.4912,-80.9545], Wisconsin:[44.2685,-89.6165], Wyoming:[42.7560,-107.3025]
@@ -144,8 +145,10 @@
 
   function updatePoints() {
     const rows = currentRows();
+    if (!rows.length) return;
     const cfg = MODE[state.mode];
     const values = rows.map(valueFor).filter(Number.isFinite);
+    if (!values.length) return;
     const min = Math.min(...values);
     const max = Math.max(...values);
     const spread = Math.max(max - min, 0.0001);
@@ -250,9 +253,11 @@
   }
 
   function resize() {
-    const rect = root.getBoundingClientRect();
-    renderer.setSize(rect.width, Math.max(rect.height, 520), false);
-    camera.aspect = rect.width / Math.max(rect.height, 520);
+    const rect = stage.getBoundingClientRect();
+    const width = Math.max(rect.width, 320);
+    const height = Math.max(rect.height, 520);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }
 
@@ -271,18 +276,28 @@
     pulseGroup.visible = ui.togglePulse.checked && ui.toggleArcs.checked;
   }
 
+  function setYear(year) {
+    const next = Number(year);
+    if (!Number.isFinite(next)) return;
+    state.year = next;
+    ui.year.value = String(next);
+    ui.yearLabel.textContent = String(next);
+    updatePoints();
+  }
+
+  function setMode(mode) {
+    if (!MODE[mode]) return;
+    state.mode = mode;
+    ui.modes.querySelectorAll('button').forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+    updatePoints();
+  }
+
   function bindUi() {
-    ui.year.addEventListener('input', () => {
-      state.year = Number(ui.year.value);
-      ui.yearLabel.textContent = state.year;
-      updatePoints();
-    });
+    ui.year.addEventListener('input', () => setYear(ui.year.value));
     ui.modes.addEventListener('click', event => {
       const btn = event.target.closest('button[data-mode]');
       if (!btn) return;
-      state.mode = btn.dataset.mode;
-      ui.modes.querySelectorAll('button').forEach(b => b.classList.toggle('active', b === btn));
-      updatePoints();
+      setMode(btn.dataset.mode);
     });
     [ui.toggleEarth, ui.toggleWire, ui.toggleStars, ui.toggleArcs, ui.togglePulse].forEach(input => input.addEventListener('change', updateVisibility));
     ui.arcStrength.addEventListener('input', () => updatePoints());
@@ -314,6 +329,29 @@
       if (state.hover && state.hover.userData.row) flashState(state.hover.userData.row.STATE);
     });
     window.addEventListener('resize', resize);
+  }
+
+  function bindChapters() {
+    const chapters = [...root.querySelectorAll('.globe-chapter')];
+    if (!chapters.length) return;
+
+    const activate = chapter => {
+      chapters.forEach(item => item.classList.toggle('active', item === chapter));
+      setMode(chapter.dataset.mode);
+      setYear(chapter.dataset.year);
+      state.pausedUntil = performance.now() + 1600;
+    };
+
+    activate(chapters[0]);
+    if (!('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) activate(entry.target);
+      });
+    }, { threshold: 0.55, rootMargin: '-20% 0px -25% 0px' });
+
+    chapters.forEach(chapter => observer.observe(chapter));
   }
 
   function updateHover() {
@@ -353,6 +391,7 @@
   async function init() {
     resize();
     bindUi();
+    bindChapters();
     buildPoints();
     updateVisibility();
     try {

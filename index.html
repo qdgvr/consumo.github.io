@@ -6,7 +6,7 @@
   <title>Comunicación | Ocio digital y fecundidad en Estados Unidos</title>
   <meta name="description" content="Reportaje de datos sobre ocio digital, tiempo exterior y fecundidad en Estados Unidos entre 2005 y 2024.">
   <style>html,body{margin:0;background:#111;color:#f5f5f5}</style>
-  <link rel="stylesheet" href="wp-dark-article-v10.css?v=globe-hero-2">
+  <link rel="stylesheet" href="wp-dark-article-v10.css?v=scrolly-globe-1">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -34,6 +34,7 @@
 
   <main id="main" class="page">
     <section class="globe-hero" id="globe-hero" aria-label="Prólogo interactivo sobre ocio digital y fecundidad">
+      <div class="globe-stage">
       <canvas id="globe-canvas" aria-hidden="true"></canvas>
       <div class="globe-shade"></div>
 
@@ -76,6 +77,31 @@
         <span id="globe-year-label">2024</span>
         <input type="range" id="globe-year" min="2005" max="2024" value="2024" step="1">
         <small>2005</small><small>2024</small>
+      </div>
+      </div>
+
+      <div class="globe-scroll-chapters" aria-label="Relato guiado del prólogo">
+        <section class="globe-chapter" data-mode="digital" data-year="2020">
+          <span>01</span>
+          <h2>Primero aparece la pantalla</h2>
+          <p>El globo permanece fijo mientras avanza el relato. En 2020, el ocio digital alcanza su máximo en la serie estatal y el punto de partida se vuelve visible: más tiempo cotidiano alrededor de la televisión, los videojuegos y el ordenador recreativo.</p>
+        </section>
+        <section class="globe-chapter" data-mode="outside" data-year="2024">
+          <span>02</span>
+          <h2>Después se estrecha la calle</h2>
+          <p>Al pasar al tiempo exterior, los puntos cambian de escala. La pregunta ya no es sólo cuánto se mira una pantalla, sino cuánto del día queda para actividades presenciales fuera del hogar.</p>
+        </section>
+        <section class="globe-chapter" data-mode="fertility" data-year="2024">
+          <span>03</span>
+          <h2>La fecundidad joven se repliega</h2>
+          <p>El mapa cambia de lenguaje: ya no muestra horas, sino nacimientos por 1.000 mujeres. La caída se concentra especialmente en edades jóvenes, donde el calendario reproductivo se desplaza con más fuerza.</p>
+        </section>
+        <section class="globe-chapter" data-mode="maternal" data-year="2024">
+          <span>04</span>
+          <h2>El calendario se mueve hacia más tarde</h2>
+          <p>La edad media materna resume la transición. La demografía no aparece de golpe en el hospital: empieza antes, en la distribución del tiempo, los lugares de encuentro y la posibilidad cotidiana de construir vínculos.</p>
+          <a href="#article-start">Entrar en el reportaje</a>
+        </section>
       </div>
     </section>
 
@@ -375,7 +401,7 @@
       </section>
     </article>
   </main>
-  <script src="globe-hero.js"></script>
+  <script src="globe-hero.js?v=scrolly-globe-1"></script>
   <script src="us-map-widget.js"></script>
 </body>
 </html>
