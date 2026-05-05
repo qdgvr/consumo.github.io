@@ -2020,3 +2020,9 @@ a { color: inherit; }
 .globe-hero[data-region="title"] .globe-shade {
   opacity: 1;
 }
+
+/* Minimal globe HUD: keep only kicker and region name */
+.globe-hud #globe-stage-summary,
+.globe-statline {
+  display: none !important;
+}

@@ -268,8 +268,8 @@
     const rows = rowsFor(state.activeRegion);
     ui.kicker.textContent = cfg.kicker;
     ui.title.textContent = cfg.title;
-    ui.summary.textContent = cfg.summary;
-    ui.statline.innerHTML = topBottomText(rows);
+    if (ui.summary) ui.summary.textContent = cfg.summary;
+    if (ui.statline) ui.statline.innerHTML = topBottomText(rows);
   }
 
   function buildPoints() {
@@ -440,7 +440,7 @@
       activateRegion('europe');
     } catch (err) {
       root.classList.add('globe-error');
-      ui.summary.textContent = 'No se pudieron cargar los datos de fecundidad total.';
+      if (ui.summary) ui.summary.textContent = 'No se pudieron cargar los datos de fecundidad total.';
     }
     animate();
   }
