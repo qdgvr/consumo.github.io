@@ -7,7 +7,8 @@
   <meta name="description" content="Reportaje de datos sobre ocio digital, tiempo exterior y fecundidad en Estados Unidos entre 2005 y 2024.">
   <style>html,body{margin:0;background:#111;color:#f5f5f5}</style>
   <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; if (!location.hash) scrollTo(0, 0);</script>
-  <link rel="stylesheet" href="wp-dark-article-v10.css?v=tfr-flatmap-1">
+  <link rel="stylesheet" href="wp-dark-article-v10.css?v=tfr-globe-boundaries-2">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
@@ -35,7 +36,7 @@
   <main id="main" class="page">
     <section class="globe-hero" id="globe-hero" data-region="europe" aria-label="Prólogo interactivo sobre fecundidad comparada">
       <div class="globe-stage">
-        <svg id="globe-map" class="globe-map" role="img" aria-label="Mapa comparado de fecundidad total"></svg>
+        <canvas id="globe-canvas" aria-hidden="true"></canvas>
         <div class="globe-shade"></div>
 
         <div class="globe-hud" aria-live="polite">
@@ -365,7 +366,7 @@
       </section>
     </article>
   </main>
-  <script src="globe-hero.js?v=tfr-flatmap-1"></script>
+  <script src="globe-hero.js?v=tfr-globe-boundaries-2"></script>
   <script src="us-map-widget.js"></script>
 </body>
 </html>
