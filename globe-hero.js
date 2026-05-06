@@ -468,7 +468,7 @@
     window.addEventListener('scroll', () => requestAnimationFrame(updateFromScroll), { passive: true });
     try {
       const [tfr, world, usStates] = await Promise.all([
-        fetch('data/tfr-globe-data.json?v=tfr-globe-europe-1').then(r => r.json()),
+        fetch('data/tfr-globe-data.json?v=tfr-globe-europe-2').then(r => r.json()),
         fetch('data/world-countries.geojson?v=tfr-globe-boundaries-1').then(r => r.json()),
         fetch('us-states.json').then(r => r.json())
       ]);

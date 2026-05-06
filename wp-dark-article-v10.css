@@ -2581,6 +2581,23 @@ a { color: inherit; }
   .us-map-widget .ranking-section {
     width: min(420px, 24vw);
   }
+
+  .us-map-widget #y-block .metric-heading {
+    width: min(620px, 35vw);
+  }
+
+  .us-map-widget #y-block .metric-heading h2 {
+    font-size: clamp(38px, 4.1vw, 60px);
+  }
+
+  .us-map-widget #y-block .metric-heading p:not(.metric-kicker) {
+    max-width: min(620px, 35vw);
+    font-size: clamp(14px, 1.08vw, 17px);
+  }
+
+  .us-map-widget #y-block .state-card {
+    top: clamp(610px, 66vh, 760px);
+  }
 }
 
 @media (max-width: 1100px) and (min-width: 761px) {
