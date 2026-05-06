@@ -2064,15 +2064,22 @@ a { color: inherit; }
   font: 700 13px/1.25 var(--ui-font);
 }
 
-/* Globe scroll triggers stay active, but the text cards are removed visually. */
+/* Globe scroll triggers stay active; the active step appears as a borderless text card. */
 .globe-hero {
   min-height: 470vh;
 }
 
-.globe-chapter,
-.globe-chapter.active {
-  visibility: hidden !important;
+.globe-chapter {
+  visibility: visible !important;
   opacity: 0 !important;
+  transform: translateY(24px);
+  pointer-events: none;
+}
+
+.globe-chapter.active {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: translateY(0);
 }
 
 .globe-title-chapter,
