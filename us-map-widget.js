@@ -175,6 +175,7 @@
       .translateExtent([[0, 0], [mapWidth, mapHeight]])
       .on("zoom", (event) => mapGroup.attr("transform", event.transform));
     svg.call(zoomBehavior);
+    svg.on("wheel.zoom", null);
     document.getElementById(id.zoomIn).addEventListener("click", () => svg.transition().duration(200).call(zoomBehavior.scaleBy, 1.2));
     document.getElementById(id.zoomOut).addEventListener("click", () => svg.transition().duration(200).call(zoomBehavior.scaleBy, 0.8));
 
