@@ -907,22 +907,6 @@ a { color: inherit; }
   letter-spacing: -0.02em;
 }
 .story-body strong { font-weight: 700; }
-
-.article-bridge {
-  margin-top: 46px;
-  margin-bottom: 44px;
-}
-
-.article-bridge h2 {
-  margin: 36px 0 14px;
-  font: 700 32px/1.08 var(--ui-font);
-  letter-spacing: -0.03em;
-}
-
-.article-bridge h2:first-child {
-  margin-top: 0;
-}
-
 .data-card {
   margin: 14px 0 34px;
   padding: 0;
@@ -1124,7 +1108,7 @@ a { color: inherit; }
 }
 
 .us-map-widget .reportage-interlude {
-  padding: clamp(30px, 5vh, 56px) 0;
+  padding: 4px 0 0;
 }
 
 .us-map-widget .reportage-closing {
@@ -1173,12 +1157,6 @@ a { color: inherit; }
   background: #171717;
   color: #dedede;
   font: 400 15px/1.48 var(--ui-font);
-}
-
-.us-map-widget .interpretation-box,
-.us-map-widget .finding-box {
-  border-top: 1px solid rgba(255,255,255,.16);
-  border-bottom: 1px solid rgba(255,255,255,.16);
 }
 
 .us-map-widget .reportage-interlude .read-note strong {
