@@ -28,16 +28,40 @@ body {
 
 body {
   overflow-x: hidden;
-  animation: pageFadeIn 680ms ease-out both;
 }
 
-@keyframes pageFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: #07080a;
+  animation: pageCurtainFade 1400ms cubic-bezier(.22,.61,.36,1) 180ms both;
+  will-change: opacity;
+}
+
+@keyframes pageCurtainFade {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  22% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body { animation: none; }
+  body::before {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 a { color: inherit; }
