@@ -26,7 +26,20 @@ body {
   font-family: var(--ui-font);
 }
 
-body { overflow-x: hidden; }
+body {
+  overflow-x: hidden;
+  animation: pageFadeIn 680ms ease-out both;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+}
+
 a { color: inherit; }
 
 .skip-link {
