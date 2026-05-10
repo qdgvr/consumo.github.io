@@ -65,13 +65,19 @@
       colorB: 0x9fc3ed
     }
   };
+  const INTRO = {
+    startCenter: { lat: -10, lon: -155 },
+    cameraZ: 6.45,
+    duration: 3600,
+    textAt: 0.86
+  };
 
   const scene = new THREE.Scene();
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 1000);
-  camera.position.set(0, 0, REGIONS.europe.cameraZ);
+  camera.position.set(0, 0, INTRO.cameraZ);
 
   const group = new THREE.Group();
   scene.add(group);
@@ -144,11 +150,15 @@
     selectedRow: null,
     globalMin: 0.7,
     globalMax: 2.1,
-    targetRotation: regionRotation(REGIONS.europe.center),
-    targetCameraZ: REGIONS.europe.cameraZ,
+    targetRotation: regionRotation(INTRO.startCenter),
+    targetCameraZ: INTRO.cameraZ,
+    introActive: true,
+    introStartTime: 0,
+    introFrom: regionRotation(INTRO.startCenter),
+    introTo: regionRotation(REGIONS.europe.center),
     pausedUntil: 0
   };
-  group.rotation.set(state.targetRotation.x, state.targetRotation.y, 0);
+  group.rotation.set(state.introFrom.x, state.introFrom.y, 0);
 
   function regionRotation(center) {
     return {
@@ -357,7 +367,33 @@
     updatePoints();
   }
 
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function startIntroSequence() {
+    const from = regionRotation(INTRO.startCenter);
+    const to = regionRotation(REGIONS.europe.center);
+    while (to.y - from.y > Math.PI) to.y -= Math.PI * 2;
+    while (to.y - from.y < -Math.PI) to.y += Math.PI * 2;
+
+    state.introActive = true;
+    state.introStartTime = performance.now();
+    root.classList.add('globe-intro-ready');
+    state.introFrom = from;
+    state.introTo = to;
+    state.activeRegion = 'europe';
+    state.targetRotation = to;
+    state.targetCameraZ = REGIONS.europe.cameraZ;
+    root.dataset.region = 'europe';
+    chapters.forEach(chapter => chapter.classList.toggle('active', chapter.dataset.region === 'europe'));
+    group.rotation.set(from.x, from.y, 0);
+    camera.position.z = INTRO.cameraZ;
+    updatePoints();
+  }
+
   function updateFromScroll() {
+    if (state.introActive) return;
     if (window.scrollY < root.offsetTop + 80) {
       activateRegion('europe');
       return;
@@ -450,7 +486,22 @@
 
   function animate(now = 0) {
     requestAnimationFrame(animate);
-    if (!dragging) {
+    if (state.introActive && state.introStartTime) {
+      const raw = Math.min(1, Math.max(0, (now - state.introStartTime) / INTRO.duration));
+      const eased = easeInOutCubic(raw);
+      group.rotation.x = state.introFrom.x + (state.introTo.x - state.introFrom.x) * eased;
+      group.rotation.y = state.introFrom.y + (state.introTo.y - state.introFrom.y) * eased;
+      camera.position.z = INTRO.cameraZ + (REGIONS.europe.cameraZ - INTRO.cameraZ) * eased;
+      if (raw >= INTRO.textAt) root.classList.add('globe-intro-text');
+      if (raw >= 1) {
+        state.introActive = false;
+        root.classList.remove('globe-intro');
+        root.classList.add('globe-intro-complete');
+        group.rotation.set(state.introTo.x, state.introTo.y, 0);
+        camera.position.z = REGIONS.europe.cameraZ;
+        updateFromScroll();
+      }
+    } else if (!dragging) {
       const lerp = now > state.pausedUntil ? 0.04 : 0.025;
       group.rotation.x += (state.targetRotation.x - group.rotation.x) * lerp;
       group.rotation.y += (state.targetRotation.y - group.rotation.y) * lerp;
@@ -480,7 +531,7 @@
       state.globalMin = Math.min(...values);
       state.globalMax = Math.max(...values);
       buildPoints();
-      activateRegion('europe');
+      startIntroSequence();
     } catch (err) {
       root.classList.add('globe-error');
       if (ui.summary) ui.summary.textContent = 'No se pudieron cargar los datos de fecundidad total.';

@@ -239,6 +239,34 @@ a { color: inherit; }
 
 #globe-canvas:active { cursor: grabbing; }
 
+.globe-hero.globe-intro #globe-canvas {
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.globe-hero.globe-intro.globe-intro-ready #globe-canvas {
+  animation: globeIntroReveal 2200ms cubic-bezier(.22,.61,.36,1) 260ms both;
+  will-change: opacity, filter;
+}
+
+.globe-hero.globe-intro:not(.globe-intro-text) .globe-hud,
+.globe-hero.globe-intro:not(.globe-intro-text) .globe-chapter {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  transform: translateY(18px);
+}
+
+@keyframes globeIntroReveal {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
 .globe-shade {
   position: absolute;
   inset: auto 0 0;
