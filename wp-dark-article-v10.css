@@ -235,6 +235,7 @@ a { color: inherit; }
   height: 100%;
   display: block;
   cursor: grab;
+  transform-origin: 50% 50%;
 }
 
 #globe-canvas:active { cursor: grabbing; }
@@ -247,6 +248,13 @@ a { color: inherit; }
 .globe-hero.globe-intro.globe-intro-ready #globe-canvas {
   animation: globeIntroReveal 2200ms cubic-bezier(.22,.61,.36,1) 260ms both;
   will-change: opacity, filter;
+}
+
+.globe-hero {
+  --globe-exit-opacity: 1;
+  --globe-exit-scale: 1;
+  --globe-exit-y: 0px;
+  --globe-exit-blur: 0px;
 }
 
 .globe-hero.globe-intro:not(.globe-intro-text) .globe-hud,
@@ -606,9 +614,12 @@ a { color: inherit; }
 .chapter-gateway {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: clamp(34px, 5vw, 66px) clamp(22px, 3.6vw, 58px) clamp(56px, 7vw, 92px);
-  background: #ddd8d1;
-  color: #3e3b38;
+  padding: clamp(44px, 6vw, 88px) clamp(22px, 3.6vw, 58px) clamp(64px, 8vw, 108px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 52% 0%, rgba(48, 192, 192, .12), transparent 34%),
+    linear-gradient(180deg, #050608 0%, #080a0d 48%, #0a0d10 100%);
+  color: #fff;
 }
 
 .chapter-nav {
@@ -617,7 +628,7 @@ a { color: inherit; }
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
-  color: #5c3b22;
+  color: rgba(255, 255, 255, .72);
   font-family: var(--ui-font);
 }
 
@@ -626,8 +637,8 @@ a { color: inherit; }
   display: grid;
   place-items: center;
   padding: 10px 18px;
-  border-right: 1px solid rgba(92, 59, 34, .28);
-  color: #5c3b22;
+  border-right: 1px solid rgba(255, 255, 255, .18);
+  color: rgba(255, 255, 255, .72);
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
@@ -638,8 +649,8 @@ a { color: inherit; }
 }
 
 .chapter-nav a.active {
-  background: rgba(83, 75, 66, .08);
-  color: #3f3d3a;
+  background: rgba(48, 192, 192, .12);
+  color: #fff;
 }
 
 .chapter-nav span,
@@ -662,16 +673,17 @@ a { color: inherit; }
 .chapter-lead {
   margin: 0 0 clamp(40px, 5vw, 66px);
   padding: clamp(26px, 3vw, 38px) clamp(26px, 3.2vw, 48px);
-  border-top: 2px solid rgba(92, 59, 34, .28);
-  border-bottom: 2px solid rgba(92, 59, 34, .28);
-  color: #603916;
+  border-top: 1px solid rgba(255, 255, 255, .22);
+  border-bottom: 1px solid rgba(255, 255, 255, .22);
+  color: #fff;
   font: 700 clamp(24px, 3vw, 40px)/1.16 var(--headline-font);
   letter-spacing: -.035em;
+  text-shadow: 0 22px 72px rgba(0,0,0,.65);
 }
 
 .chapter-copy p:not(.chapter-lead) {
   margin: 0 0 28px;
-  color: #3f3d3a;
+  color: rgba(255, 255, 255, .76);
   font: 400 clamp(19px, 2.2vw, 30px)/1.42 var(--body-font);
 }
 
@@ -681,11 +693,36 @@ a { color: inherit; }
 
 .chapter-copy .chapter-meta {
   margin-top: clamp(34px, 5vw, 62px);
-  color: rgba(63, 61, 58, .62);
+  color: rgba(48, 192, 192, .82);
   font: 700 13px/1.35 var(--ui-font);
   letter-spacing: .07em;
   text-transform: uppercase;
 }
+
+.chapter-gateway:not(.is-visible) .chapter-nav a,
+.chapter-gateway:not(.is-visible) .chapter-lead,
+.chapter-gateway:not(.is-visible) .chapter-copy p:not(.chapter-lead) {
+  opacity: 0;
+  transform: translateY(42px);
+}
+
+.chapter-nav a,
+.chapter-lead,
+.chapter-copy p:not(.chapter-lead) {
+  transition:
+    opacity 950ms cubic-bezier(.16, 1, .3, 1),
+    transform 950ms cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, transform;
+}
+
+.chapter-gateway.is-visible .chapter-nav a:nth-child(1) { transition-delay: 60ms; }
+.chapter-gateway.is-visible .chapter-nav a:nth-child(2) { transition-delay: 115ms; }
+.chapter-gateway.is-visible .chapter-nav a:nth-child(3) { transition-delay: 170ms; }
+.chapter-gateway.is-visible .chapter-nav a:nth-child(4) { transition-delay: 225ms; }
+.chapter-gateway.is-visible .chapter-lead { transition-delay: 260ms; }
+.chapter-gateway.is-visible .chapter-copy p:nth-child(2) { transition-delay: 420ms; }
+.chapter-gateway.is-visible .chapter-copy p:nth-child(3) { transition-delay: 560ms; }
+.chapter-gateway.is-visible .chapter-copy p:nth-child(4) { transition-delay: 700ms; }
 
 @media (max-width: 760px) {
   .chapter-gateway {
@@ -718,6 +755,21 @@ a { color: inherit; }
   .chapter-copy p:not(.chapter-lead) {
     font-size: 21px;
     line-height: 1.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapter-gateway:not(.is-visible) .chapter-nav a,
+  .chapter-gateway:not(.is-visible) .chapter-lead,
+  .chapter-gateway:not(.is-visible) .chapter-copy p:not(.chapter-lead) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .chapter-nav a,
+  .chapter-lead,
+  .chapter-copy p:not(.chapter-lead) {
+    transition: none;
   }
 }
 
@@ -2206,7 +2258,12 @@ a { color: inherit; }
 
 .globe-hero[data-region="title"] #globe-canvas,
 .globe-hero[data-region="title"] .globe-shade {
-  opacity: 1;
+  opacity: var(--globe-exit-opacity);
+}
+
+.globe-hero[data-region="title"] #globe-canvas {
+  transform: translateY(var(--globe-exit-y)) scale(var(--globe-exit-scale));
+  filter: blur(var(--globe-exit-blur));
 }
 
 /* Minimal globe HUD: keep only kicker and region name */

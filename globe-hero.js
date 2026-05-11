@@ -14,6 +14,7 @@
 
   const stage = root.querySelector('.globe-stage') || root;
   const chapters = [...root.querySelectorAll('.globe-chapter')];
+  const gateway = document.querySelector('.chapter-gateway');
   const ui = {
     title: document.getElementById('globe-stage-title'),
     kicker: document.getElementById('globe-stage-kicker'),
@@ -371,6 +372,40 @@
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
 
+  function clamp01(value) {
+    return Math.max(0, Math.min(1, value));
+  }
+
+  function updateGlobeExit() {
+    const rect = root.getBoundingClientRect();
+    const viewport = Math.max(window.innerHeight || 1, 1);
+    const start = viewport * 1.08;
+    const end = viewport * 0.18;
+    const progress = clamp01((start - rect.bottom) / Math.max(start - end, 1));
+    const eased = easeInOutCubic(progress);
+    root.style.setProperty('--globe-exit-opacity', (1 - eased * 0.95).toFixed(3));
+    root.style.setProperty('--globe-exit-scale', (1 - eased * 0.22).toFixed(3));
+    root.style.setProperty('--globe-exit-y', `${(-44 * eased).toFixed(1)}px`);
+    root.style.setProperty('--globe-exit-blur', `${(11 * eased).toFixed(1)}px`);
+  }
+
+  function initChapterReveal() {
+    if (!gateway) return;
+    if (!('IntersectionObserver' in window)) {
+      gateway.classList.add('is-visible');
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          gateway.classList.add('is-visible');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
+    observer.observe(gateway);
+  }
+
   function startIntroSequence() {
     const from = regionRotation(INTRO.startCenter);
     const to = regionRotation(REGIONS.europe.center);
@@ -393,6 +428,7 @@
   }
 
   function updateFromScroll() {
+    updateGlobeExit();
     if (state.introActive) return;
     if (window.scrollY < root.offsetTop + 80) {
       activateRegion('europe');
@@ -482,6 +518,7 @@
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    updateGlobeExit();
   }
 
   function animate(now = 0) {
@@ -514,6 +551,7 @@
 
   async function init() {
     resize();
+    initChapterReveal();
     bindPointer();
     window.addEventListener('resize', resize);
     window.addEventListener('scroll', () => requestAnimationFrame(updateFromScroll), { passive: true });
