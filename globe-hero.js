@@ -383,10 +383,23 @@
     const end = viewport * 0.18;
     const progress = clamp01((start - rect.bottom) / Math.max(start - end, 1));
     const eased = easeInOutCubic(progress);
+    state.exitProgress = eased;
     root.style.setProperty('--globe-exit-opacity', (1 - eased * 0.95).toFixed(3));
     root.style.setProperty('--globe-exit-scale', (1 - eased * 0.22).toFixed(3));
     root.style.setProperty('--globe-exit-y', `${(-44 * eased).toFixed(1)}px`);
     root.style.setProperty('--globe-exit-blur', `${(11 * eased).toFixed(1)}px`);
+  }
+
+  function applyExitRotation() {
+    if (!state.exitProgress || state.activeRegion !== 'title') return;
+    const eased = state.exitProgress;
+    const base = regionRotation(REGIONS.title.center);
+    state.targetRotation = {
+      x: base.x - eased * 0.16,
+      y: base.y + eased * Math.PI * 0.82,
+      z: 0
+    };
+    state.targetCameraZ = REGIONS.title.cameraZ + eased * 0.72;
   }
 
   function initChapterReveal() {
@@ -432,6 +445,7 @@
     if (state.introActive) return;
     if (window.scrollY < root.offsetTop + 80) {
       activateRegion('europe');
+      applyExitRotation();
       return;
     }
     const anchor = window.innerHeight * 0.54;
@@ -447,6 +461,7 @@
       }
     });
     activateRegion(best.dataset.region || 'europe');
+    applyExitRotation();
   }
 
   function updateHover() {
