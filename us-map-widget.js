@@ -371,10 +371,23 @@
 
   function formatValue(value, metric) {
     if (!Number.isFinite(value)) return "-";
+    if (metric.suffix === " h" || metric.unit === "hours") return formatHoursMinutes(value);
     const digits = metric.digits == null ? 1 : metric.digits;
     const suffix = metric.suffix || "";
     const spacer = suffix && !suffix.startsWith("%") ? "" : "";
     return value.toFixed(digits) + spacer + suffix;
+  }
+
+  function formatHoursMinutes(value) {
+    if (!Number.isFinite(value)) return "-";
+    const totalMinutes = Math.round(value * 60);
+    const sign = totalMinutes < 0 ? "-" : "";
+    const absoluteMinutes = Math.abs(totalMinutes);
+    const hours = Math.floor(absoluteMinutes / 60);
+    const minutes = absoluteMinutes % 60;
+    if (!hours) return `${sign}${minutes} min`;
+    if (!minutes) return `${sign}${hours} h`;
+    return `${sign}${hours} h ${String(minutes).padStart(2, "0")} min`;
   }
 
   function renderLegend(rowId, colorScale, metric) {

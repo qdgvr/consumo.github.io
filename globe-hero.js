@@ -17,7 +17,7 @@
   const gateway = document.querySelector('.chapter-gateway');
   const revealTargets = [...new Set([
     gateway,
-    ...document.querySelectorAll('.us-map-widget .reportage-interlude, .us-map-widget .metric-block')
+    ...document.querySelectorAll('.us-map-widget .reportage-interlude, .us-map-widget .metric-block, .reveal-on-scroll')
   ].filter(Boolean))];
   const ui = {
     title: document.getElementById('globe-stage-title'),
