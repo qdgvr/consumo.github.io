@@ -15,6 +15,10 @@
   const stage = root.querySelector('.globe-stage') || root;
   const chapters = [...root.querySelectorAll('.globe-chapter')];
   const gateway = document.querySelector('.chapter-gateway');
+  const revealTargets = [...new Set([
+    gateway,
+    ...document.querySelectorAll('.us-map-widget .reportage-interlude, .us-map-widget .metric-block')
+  ].filter(Boolean))];
   const ui = {
     title: document.getElementById('globe-stage-title'),
     kicker: document.getElementById('globe-stage-kicker'),
@@ -403,20 +407,20 @@
   }
 
   function initChapterReveal() {
-    if (!gateway) return;
+    if (!revealTargets.length) return;
     if (!('IntersectionObserver' in window)) {
-      gateway.classList.add('is-visible');
+      revealTargets.forEach(target => target.classList.add('is-visible'));
       return;
     }
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          gateway.classList.add('is-visible');
-          observer.disconnect();
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.2, rootMargin: '0px 0px -12% 0px' });
-    observer.observe(gateway);
+    revealTargets.forEach(target => observer.observe(target));
   }
 
   function startIntroSequence() {
